@@ -1,0 +1,33 @@
+﻿@model DhofarAppWeb.Model.DepartmentType
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="d-flex justify-content-center align-items-center backgroundFormsClass" style="min-height: 100vh;">
+    <div class="col-lg-6 col-11 bg-dark rounded p-4 border border-1 border-primary rounded glassClassForm">
+        <h4 class="text-white mb-4">Create New Department Type</h4>
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name_En" class="control-label text-white"></label>
+                <input asp-for="Name_En" class="form-control rounded rounded-3 border border-1 border-primary" />
+                <span asp-validation-for="Name_En" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Name_Ar" class="control-label text-white"></label>
+                <input asp-for="Name_Ar" class="form-control rounded rounded-3 border border-1 border-primary" />
+                <span asp-validation-for="Name_Ar" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center mt-3 d-grid gap-2">
+                <input type="submit" value="Create" class="btn btn-lg btn-primary py-1" />
+                <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+

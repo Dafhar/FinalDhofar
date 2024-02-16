@@ -1,0 +1,258 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+    <body>
+    
+
+    <!-- main content  -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-8 p-0 image order-md-last">
+                <!-- Image -->
+                <img src=@Url.Content("~/images/hero.svg") alt="برج النهضة" class="img-fluid h-100 w-100">
+            </div>
+            <div class="col-12 col-md-4 mb-md-0 boxes order-md-first">
+                <div class="d-flex flex-column h-100">
+                    <div class="row flex-fill h-100">
+                        <div class="col-6 col-md-6 d-flex flex-column justify-content-center align-items-center box navy-background"
+                             data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">
+                            <img src=@Url.Content("~/images/pencil.svg") alt="Pencil">
+                            <h6 class="">سجل معنا</h6>
+                        </div>
+                        <a href="subject-list.html"
+                           class="col-6 col-md-6 d-flex flex-column justify-content-center align-items-center box lime-background">
+                            <img src=@Url.Content("~/images/light-bulb.svg") alt="Light Bulb">
+                            <h6 class="">الافكار المقترحة</h6>
+                        </a>
+
+                    </div>
+                    <div class="row flex-fill h-100">
+                        <a href="" onclick="goToCombline()"
+                           class="col-6 col-md-6 d-flex flex-column justify-content-center align-items-center box light-blue-background">
+                            <img src=@Url.Content("~/images/chat.svg") alt="Chat">
+                                <h6 class="" >الشكاوي و البلاغات</h6>
+                        </a>
+                        <div class="col-6 col-md-6 d-flex flex-column justify-content-center align-items-center box green-background">
+                            <img src=@Url.Content("~/images/chart.svg") alt="Chart">
+                            <h6 class="">الإحصائيات</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="container">
+            <div class="row mt-3 d-flex justify-content-between">
+                <!-- Box 1 -->
+                <div class="col-lg-2 col-md-12 col-sm-12 p-3 d-flex align-items-center subject-header">
+                    <h5 class="navy text-center ">محاور الأفكار و المقترحات</h5>
+                </div>
+
+                <!-- Box 2 -->
+                <div class="sub-box mb-3 circle-container col-lg-2 col-md-3 col-sm-4 p-3 mr-2">
+                    <h6 class="subject-box-title">الأفكار والمقترحات العامة</h6>
+                    <div class="circle-container">
+                        <span class="circle"></span>
+                        <span class="circle">
+                            <img src=@Url.Content("~/images/subject-user-img.svg")
+                                 class="subject-user-img">
+                        </span>
+                        <span class="circle"></span>
+                    </div>
+                    <div class="d-flex align-items-center  subject-number">
+                        <img src=@Url.Content("~/images/subject-icon.svg")/>
+                        <p class="navy m-0">
+                            <span class="navy">٤</span>
+                            موضوع
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Box 3 -->
+                <div class="sub-box mb-3 circle-container col-lg-2 col-md-3 col-sm-4 p-3">
+                    <h6 class="subject-box-title">تطوير الخدمات الالكترونية</h6>
+                    <div class="circle-container">
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                    </div>
+                    <div class="d-flex align-items-center subject-number">
+                        <img src=@Url.Content("~/images/subject-icon.svg")/>
+                        <p class="navy m-0">
+                            <span class="navy">٤</span>
+                            موضوع
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Box 4 -->
+                <div class="sub-box mb-3 circle-container col-lg-2 col-md-3 col-sm-4 p-3">
+                    <h6 class="subject-box-title">حلول وأفكار تصريف مياه الأمطار</h6>
+                    <div class="circle-container">
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                    </div>
+                    <div class="d-flex align-items-center subject-number">
+                        <img src=@Url.Content("~/images/subject-icon.svg")/>
+                        <p class="navy m-0">
+                            <span class="navy">٤</span>
+                            موضوع
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Box 5 -->
+                <div class="sub-box mb-3 circle-container col-lg-2 col-md-3 col-sm-4 p-3">
+                    <h6 class="subject-box-title">تطوير السوق المركزي</h6>
+                    <div class="circle-container">
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                    </div>
+                    <div class="d-flex align-items-center subject-number">
+                        <img src="@Url.Content("~/images/subject-icon.svg")"/>
+                        <p class="navy m-0 ">
+                            <span class="navy">٤</span>
+                            موضوع
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Box 6 -->
+                <div class="sub-box mb-3 circle-container col-lg-2 col-md-3 col-sm-4 p-3">
+                    <h6 class="subject-box-title">مقترح لفعاليات خريف ظفار ٢٠٢٤</h6>
+                    <div class="circle-container">
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                    </div>
+                    <div class="d-flex align-items-center subject-number">
+                        <img src=@Url.Content("~/images/subject-icon.svg")/>
+                        <p class="navy m-0 ">
+                            <span class="navy">٤</span>
+                            موضوع
+                        </p>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-3 col-12 mb-3">
+                    <div class="card bg-white p-3 second-box-row">
+                        <div class="row g-0">
+                            <h6>أكثر المواضيع تقييمًا</h6>
+                            <div class="col-md-4 d-flex">
+                                <img src=@Url.Content("~/images/topic-image.svg") class="align-items-center subject-img"
+                                     alt="subject-img">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-2">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h6 class="">
+                                            <span class="circle-user"></span>
+                                            سالم محمد
+                                            <span class="active-user"></span>
+                                        </h6>
+                                        <p class="date-time">١٢ ابريل ٢٠٢٣ | ٢:٣٠ م</p>
+                                    </div>
+                                    <p class="card-text navy">فكرة تعديل سوق الحافة</p>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary">
+                                            السلام عليكم، أما بعد
+                                            أتقدم إليكم باقتراح تعدي...
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-12 mb-3">
+                    <div class="p-2 flex-fill h-100 p-3 second-box-row">
+                        <h6 class="m-0">
+                            عدد المقترحات
+                        </h6>
+                        <div class=" d-flex align-items-center mt-3">
+                            <img src=@Url.Content("~/images/suggestions-icon.svg") class="ml-2">
+                            <h3 class="m-0 navy fw-bold px-2">٢٤٠</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-12 mb-3">
+                    <div class="p-2 flex-fill h-100 p-3 second-box-row">
+                        <h6 class="m-0">
+                            عدد الزوار
+                        </h6>
+                        <div class=" d-flex align-items-center mt-3">
+                            <img src=@Url.Content("~/images/suggestions-icon.svg") class="ml-2">
+                            <h3 class="m-0 navy fw-bold px-2">٢٤٠</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-12 mb-3">
+                    <div class="p-2 flex-fill h-100 p-3 second-box-row">
+                        <h6 class="m-0">
+
+                            عدد الزوار
+                        </h6>
+                        <div class=" d-flex align-items-center mt-3">
+                            <img src=@Url.Content("~/images/suggestions-icon.svg") class="ml-2">
+                            <h3 class="m-0 navy fw-bold px-2">٢٤٠</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-12 mb-3 ">
+                    <div class="p-2 flex-fill h-100 p-3 second-box-row">
+                        <h6 class="m-0">
+                            الأعضاء النشطون
+                        </h6>
+                        <div class="active-users-container mt-3 d-flex justify-content-evenly">
+                            <div class="">
+                                <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img user-circle">
+                                <p class="user-name m-0 mt-2">فهد حمد</p>
+                            </div>
+                            <div class="">
+                                <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img user-circle">
+                                <p class="user-name m-0 mt-2">فهد حمد</p>
+                            </div>
+                            <div class="">
+                                <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img user-circle">
+                                <p class="user-name m-0 mt-2">فهد حمد</p>
+                            </div>
+                            <div class="">
+                                <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img user-circle">
+                                <p class="user-name m-0 mt-2">فهد حمد</p>
+                            </div>
+                            <div class="">
+                                <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img user-circle">
+                                <p class="user-name m-0 mt-2">فهد حمد</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    </body>
+
+
+</html>

@@ -1,0 +1,45 @@
+﻿@model DepartmentType
+
+<div class="container my-5 pt-5 col-6 offset-3">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h2 class="card-title text-center"><i class="bi bi-trash3-fill me-3"></i>Delete DepartmentType</h2>
+            <hr>
+
+            <dl class="row">
+                <dt class="col-sm-4 text-start">
+                    @Html.DisplayNameFor(model => model.Name_En)
+                </dt>
+                <dd class="col-sm-8 text-end">
+                    @Html.DisplayFor(model => model.Name_En)
+                </dd>
+
+                <dt class="col-sm-4 text-start">
+                    @Html.DisplayNameFor(model => model.Name_Ar)
+                </dt>
+                <dd class="col-sm-8 text-end">
+                    @Html.DisplayFor(model => model.Name_Ar)
+                </dd>
+            </dl>
+
+            <form id="deleteForm" asp-action="DeleteConfirmed" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-grid gap-2">
+                    <button id="deleteButton" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+
+            <a asp-action="Index" class="btn btn-outline-danger mt-3">Back to List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('deleteButton').addEventListener('click', function () {
+            if (confirm('Are you sure you want to delete this DepartmentType?')) {
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    </script>
+}

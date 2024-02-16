@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Profile Page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+    <link href="./css/user-profile.css" rel="stylesheet" />
+    </head>
+
+    <body>
+
+    <!-- main content  -->
+    <div class="container-fluid px-4">
+        <div class="col-12 main-header px-5 py-2 rounded-3">
+            <h4 class="m-0 py-2">ملفي الشخصي</h4>
+        </div>
+        <div class="row d-flex justify-content-between mt-4 mb-3">
+
+            <div class="col-12 col-md-4 col-lg-4 ">
+                <div class="profile-box py-5 px-4 d-flex flex-fill align-items-center flex-column h-100">
+                    <div class="profile-img-container">
+                        <img src="assets/images/profile-img.svg" class="profile-img" alt="Profile Image">
+                    </div>
+
+                    <div class="col-6 profile-user-name mt-3 d-flex justify-content-center">
+                        <p class="py-1 px-3 m-0 navy-background rounded-pill">مازن دهيش</p>
+                        <img class="px-1" src="assets/images/patch-check-fill.svg">
+                    </div>
+                    <div class="name">
+                        <p class="navy mt-2">المشرف العام</p>
+
+                    </div>
+
+                    <div class="container col-6">
+                        <div class="row align-items-center">
+                            <div class="col-auto p-0 d-flex align-items-center">
+                                <i class="fa-regular fa-face-frown navy"></i>
+                            </div>
+                            <div class="col px-2">
+                                <div class="progress">
+                                    <div class="progress-bar custom-progress-color" role="progressbar"
+                                         style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto p-0 d-flex align-items-center justify-content-end">
+                                <i class="fa-regular fa-face-smile navy"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 col-12 mx-auto mt-5">
+                        <div class="row">
+                            <div class="col d-flex justify-content-between align-items-center profile-info p-3 rounded-3">
+                                <p class="m-0 navy profile-info-title">رقم العضوية</p>
+                                <h5 class="m-0 green">١٤٠</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col d-flex justify-content-between align-items-center profile-info p-3 rounded-3">
+                                <p class="m-0 navy profile-info-title">المشاركات</p>
+                                <h5 class="m-0 green">١</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col d-flex justify-content-between align-items-center profile-info p-3 rounded-3">
+                                <p class="m-0 navy profile-info-title">الإعجاب</p>
+                                <h5 class="m-0 green">٢</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-8">
+                <div class="mt-4">
+                    <div class="profile-box flex-fill p-4 mt-sm-4">
+                        <label class="navy mb-2">نبذة عني</label>
+                        <div class="form-floating">
+                            <textarea class="form-control p-2" id="floatingTextarea2" style="height: 100px"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class=" mt-4">
+                    <div class="profile-box flex-fill p-4">
+                        <div class="d-flex justify-content-between">
+                            <div class="flex-start align-self-center">
+                                <h6 class="navy m-0 px-1 ">معلوماتي</h6>
+                            </div>
+                            <div class="flex-end">
+                                <button class="btn btn-sm navy-background edit-profile-btn" onclick="goToEditProfile()">
+                                    تعديل بياناتي<span class="ml-4"><i class="fa-solid fa-pen-clip"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-4">
+                            <div class="col-12 col-md-6">
+                                <label class="navy mb-1">المجموعة</label>
+                                <p class="gray-text">مدير المنتدى</p>
+                                <label class="navy mb-1">الإيميل</label>
+                                <p class="gray-text">Mazin.d@gmail.com</p>
+                                <label class="navy mb-1">تاريخ التسجيل</label>
+                                <p class="gray-text">19-08-2020 01:48 مساء</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="navy mb-1">الجنس</label>
+                                <p class="gray-text">ذكر</p>
+                                <label class="navy mb-1">الردود</label>
+                                <p class="gray-text">٢٠٠ رد</p>
+                                <label class="navy mb-1">الحالة</label>
+                                <p class="gray-text">غير متصل</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row m-0">
+                    <div class="col d-flex justify-content-between gap-2 p-0 mt-4 flex-column flex-sm-row">
+                        <button class="green-background btn btn-lg d-flex justify-content-between align-self-center profile-subject-btn flex-fill w-100">
+                            <span class="text-start">مواضيعي</span>
+                            <span class="arrow-icon"><i class="fa-solid fa-arrow-left"></i></span>
+                        </button>
+                        <button class="green-background btn btn-lg d-flex justify-content-between align-self-center profile-subject-btn flex-fill w-100">
+                            <span class="text-start">بلاغاتي والشكاوي</span>
+                            <span class="arrow-icon"><i class="fa-solid fa-arrow-left"></i></span>
+                        </button>
+                        <button class="green-background btn btn-lg d-flex justify-content-between align-self-center profile-subject-btn flex-fill w-100">
+                            <span class="text-start">المواضيع المفضلة</span>
+                            <span class="arrow-icon"><i class="fa-solid fa-arrow-left"></i></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row text-center text-md-end">
+                    <p class="navy py-3">تمت زيارة هذه الصفحة <span>٥٦٨</span> مرة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

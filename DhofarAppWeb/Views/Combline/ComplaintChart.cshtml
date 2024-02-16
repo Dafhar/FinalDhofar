@@ -1,0 +1,42 @@
+﻿@model Dictionary<string, int>
+
+@{
+    ViewData["Title"] = "Complaint Chart";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<canvas id="complaintChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('complaintChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Keys)),
+                datasets: [{
+                    label: 'Complaints',
+                    data: @Html.Raw(Json.Serialize(Model.Values)),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

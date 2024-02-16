@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewData["Title"] = "Combline page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+        integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Your custom stylesheets -->
+
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/complaints.css" rel="stylesheet" />
+    <link href="~/css/user-profile.css" rel="stylesheet" />
+
+    <title>complaints</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+</head>
+
+<body>
+
+
+    <!-- main content  -->
+    <div class="container-fluid  px-4">
+        <div class="col-12 main-header px-5 py-2 rounded-3 d-flex justify-content-between">
+            <h4 class="m-0 py-2">أنشئ بلاغ أو شكوى</h4>
+            <img src=@Url.Content("~/images/chat-icon.svg" )class="chat-icon-header">
+        </div>
+        <!-- <div class="d-flex justify-content-end d-none d-sm-flex"> -->
+
+
+        <div class="row d-flex justify-content-between mt-4 mb-3">
+            <div class="px-3">
+                <form>
+                    <div class="row mt-sm-4">
+                        <div class="col-12 col-md-7">
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">نوع الشكوى ( الدائرة )</label>
+                                        <div class="dropdown d-flex align-items-center">
+                                            <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                                    aria-label="Multi Select project" id="" required>
+                                                <option disabled selected value="">النظافة العامة</option>
+                                                <option value="Feature Request">النظافة العامة</option>
+                                                <option value="Problem Report">النظافة العامة </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">الولاية</label>
+                                        <div class="dropdown d-flex align-items-center">
+                                            <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                                    aria-label="Multi Select project" id="selectLocation" required>
+                                                <option disabled selected value="">صلالة</option>
+                                                <option value="Thumrait">ثمريت</option>
+                                                <option value="Taqah">طاقة</option>
+                                                <option value="Marbat">مرباط</option>
+                                                <option value="Rakhyout">رخيوت</option>
+                                                <option value="Dalkout">ضلكوت</option>
+                                                <option value="Sadah">سدح</option>
+                                                <option value="Shalim and Jazirat Al Hallaniyat">
+                                                    شليم وجزر الحلانيات
+                                                </option>
+                                                <option value="Mughsayn">مقشن</option>
+                                                <option value="Al Mazyuna">المزيونة</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-fill mt-sm-4 mb-3">
+                                <label class="navy mb-2">عنوان الشكوى</label>
+                                <div class="dropdown d-flex align-items-center">
+                                    <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                            aria-label="Multi Select project" id="" required>
+                                        <option disabled selected value="">النظافة العامة</option>
+                                        <option value="Feature Request">النظافة العامة</option>
+                                        <option value="Problem Report">النظافة العامة </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">خدمات الدائرة</label>
+                                        <div class="dropdown d-flex align-items-center">
+                                            <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                                    aria-label="Multi Select project" id="" required>
+                                                <option disabled selected value="">النظافة العامة</option>
+                                                <option value="Feature Request">النظافة العامة</option>
+                                                <option value="Problem Report">النظافة العامة </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">الخدمات المتفرعة</label>
+                                        <div class="dropdown d-flex align-items-center">
+                                            <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                                    aria-label="Multi Select project" id="selectLocation" required>
+                                                <option disabled selected value="">صلالة</option>
+                                                <option value="Thumrait">ثمريت</option>
+                                                <option value="Taqah">طاقة</option>
+                                                <option value="Marbat">مرباط</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">وصف الشكوى</label>
+                                        <div class="form-floating">
+                                            <textarea class="form-control rtl-dropdown p-2 py-3"
+                                                      placeholder="أوصف الشكوى هنا" id="floatingTextarea4"
+                                                      style="height: 100px"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label class="navy mb-2">موقع الشكوى</label>
+                                        <div class="form-floating">
+                                            <textarea class="form-control rtl-dropdown p-2 py-3"
+                                                      placeholder="اكتب الموقع أو الصق رابط الموقع" id="floatingTextarea5"
+                                                      style="height: 100px"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <div class="flex-fill mt-sm-4 mb-3">
+                                <label class="navy mb-2">المرفقات</label>
+                                <div class="file-upload-container rounded-3">
+                                    <label for="fileInput" class="file-label mb-4">
+                                        <input type="file" id="fileInput"
+                                               accept="image/png, image/jpeg, image/gif, application/pdf" multiple />
+                                        <span class="file-content">
+                                            <img src=@Url.Content("~/images/inbox-icon.svg") />
+                                            <span class="upload-text">Upload</span>
+                                        </span>
+                                    </label>
+                                    <div id="preview" class="image-preview"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-0">
+                            <button class="btn btn-sm login-button col-12 col-md-2" data-bs-target="#exampleModalToggle6"
+                                    data-bs-toggle="modal">
+                                إرسال
+                            </button>
+                        </div>
+
+                </form>
+               
+                    <div class="modal fade" id="exampleModalToggle6" aria-hidden="true"
+                        aria-labelledby="exampleModalToggleLabel6" tabindex="-1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                <div class="row">
+                                    <div
+                                        class="col-lg-6 modal-login d-flex justify-content-center align-items-center flex-column">
+                                        <img src=@Url.Content("~/images/check-circle.svg")/>
+                                        <h1 class="modal-title fs-3 navy mt-4 text-center" id="exampleModalToggleLabel">
+                                            تم إرسال الشكوى بنجاح!
+                                        </h1>
+                                        
+                                            <a type="submit" class="btn btn-sm login-button px-4 mt-2" href="/Home/Index">
+                                                الصفحة
+                                                الرئيسية
+                                            </a>
+                                       
+                                 
+                                        
+                                    </div>
+                                    <div class="col-lg-6 d-flex justify-content-end">
+                                        <img src=@Url.Content("~/images/login-img.png") class="login-img d-none d-lg-flex"
+                                            alt="Login Image">
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+    <script>
+        function goToComplaints() {
+            window.location.href = "/Combline"; // Change the URL to the actual path of your Combline.cshtml
+        }
+    </script>
+
+ 
+</body>
+
+</html>

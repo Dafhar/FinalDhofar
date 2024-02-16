@@ -1,0 +1,28 @@
+﻿@model DepartmentType
+
+
+<div class="d-flex justify-content-center align-items-center backgroundFormsClass" style="min-height: 100vh;">
+    <div class="col-md-5 col-sm-11 bg-dark rounded p-4 border border-1 border-primary rounded glassClassForm">
+        <h4 class="text-white mb-4">Edit Department</h4>
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name_En" class="control-label text-white"></label>
+                <input asp-for="Name_En" class="form-control rounded rounded-3 border border-1 border-primary" />
+                <span asp-validation-for="Name_En" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name_Ar" class="control-label text-white"></label>
+                <input asp-for="Name_Ar" class="form-control rounded rounded-3 border border-1 border-primary" />
+                <span asp-validation-for="Name_Ar" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center mt-3 d-grid gap-2">
+                <input type="submit" value="Save" class="btn btn-lg btn-primary border border-1 border-primary" />
+                <a asp-action="Index" class="btn btn-outline-danger mt-3">Back to List</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+

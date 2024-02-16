@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Contact Page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+    <body>
+
+
+    
+
+        <div class="container-fluid row">
+            <div class="col-md-2 col-12 mt-5 mt-md-0 d-flex align-items-center justify-content-center">
+                <h5 class="navy text-center">تواصل معنا</h5>
+            </div>
+
+            <div class="col-md-10 col-12">
+                <div class="row mt-sm-4">
+                    <div class="col-md-4 mt-sm-4 mb-3">
+                        <label class="navy mb-2">الاسم الكامل</label>
+                        <input class="form-control contact-us-inputs" placeholder="مازن دهيش">
+                    </div>
+                    <div class="col-md-4 mt-sm-4 mb-3">
+                        <label class="navy mb-2">الإيميل</label>
+                        <input class="form-control contact-us-inputs" placeholder="Mazin.d@gmail.com">
+                    </div>
+                    <div class="col-md-4 mt-sm-4 mb-3 position-relative">
+                        <label class="navy mb-2">رقم الهاتف النقال</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control text-end custom-placeholder contact-us-inputs" id="phone" placeholder="999999" required>
+                            <span class="input-group-text position-absolute top-50 translate-middle-y">
+                                <img src=@Url.Content("~/images/oman-flag.svg") alt="Flag" class="flag">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-sm-4 mb-3">
+                        <label class="navy mb-2">الرسالة</label>
+                        <div class="form-floating p-0">
+                            <textarea class="form-control p-2 contact-us-inputs" id="floatingTextarea2" placeholder="تفضل عبر عن ما بداخلك" style="height: 100px"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 p-0 mb-3">
+                    <button class="btn login-button w-100">إرسال</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

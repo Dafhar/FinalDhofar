@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33913.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DhofarAppWeb", "DhofarAppWeb\DhofarAppWeb.csproj", "{07F0C43E-DE83-48FA-A89F-5A4CE7D79889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DhofarAppApi", "DhofarAppApi\DhofarAppApi.csproj", "{6A5A49FD-1B96-47BA-8144-47854C0F139A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07F0C43E-DE83-48FA-A89F-5A4CE7D79889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F0C43E-DE83-48FA-A89F-5A4CE7D79889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F0C43E-DE83-48FA-A89F-5A4CE7D79889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F0C43E-DE83-48FA-A89F-5A4CE7D79889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A5A49FD-1B96-47BA-8144-47854C0F139A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5A49FD-1B96-47BA-8144-47854C0F139A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A5A49FD-1B96-47BA-8144-47854C0F139A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5A49FD-1B96-47BA-8144-47854C0F139A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AF1AE99-13C7-4102-A2D3-6D6E9D3D10D5}
+	EndGlobalSection
+EndGlobal

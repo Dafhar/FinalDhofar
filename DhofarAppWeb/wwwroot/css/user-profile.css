@@ -1,0 +1,206 @@
+.profile-box {
+    border-right: 6px solid #2BA899;
+    border-radius: 10px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.edit-profile-box {
+    border-right: 2px solid #2BA899;
+    border-radius: 10px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.profile-img-container {
+    width: 150px; /* Adjust the width and height as needed for your circle */
+    height: 150px; /* This will create a circular container */
+    border-radius: 50%; /* Make it a circle */
+    overflow: hidden; /* Hide any image overflow */
+    border: double 7px transparent;
+    border-radius: 50%;
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #4181D2,#6EC1ED,#5DD1B1);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img {
+    width: 24%; /* Make the image fill the circular container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Maintain the image aspect ratio and cover the container */
+}
+
+
+.profile-user-name {
+    color: white;
+    font-size: small;
+    white-space: nowrap;
+}
+
+.edit-profile-btn {
+    color: white;
+}
+
+.profile-subject-btn {
+    color: white;
+}
+
+    .profile-subject-btn span {
+        font-size: small;
+    }
+
+
+.profile-info {
+    background-color: #FAFAFB;
+}
+
+.profile-info-title {
+    font-size: x-small;
+}
+
+.name p {
+    white-space: nowrap !important;
+}
+
+.upload-box {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: #F8F9FA;
+    border-right: 2px solid #2BA899;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+    .upload-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 1;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .upload-box:hover::before {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .upload-box img {
+        transition: filter 0.3s ease-in-out;
+    }
+
+    .upload-box:hover img {
+        filter: brightness(70%);
+    }
+
+    .upload-box:hover img {
+        filter: brightness(100%) !important;
+    }
+
+.upload-icon {
+    font-size: 20px;
+    opacity: 0.5;
+    margin-bottom: 5px;
+}
+
+.upload-text {
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.upload-text-small {
+    font-size: xx-small;
+    color: #6C757D;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.delete-btn,
+.view-btn {
+    display: none;
+    position: relative;
+    /* width: 6px; */
+    text-align: center;
+    /* margin-right: 20px; */
+    transition: opacity 0.3s ease-in-out;
+    z-index: 5;
+    padding: 0;
+}
+
+    .delete-btn i,
+    .view-btn i {
+        cursor: pointer;
+        color: white;
+        width: 20px;
+    }
+
+
+.delete-btn {
+    left: 5px;
+}
+
+.view-btn {
+    right: 5px;
+}
+
+    .delete-btn:hover,
+    .view-btn:hover {
+        opacity: 0.7;
+    }
+
+.upload-box:hover .delete-btn,
+.upload-box:hover .view-btn {
+    display: block;
+}
+
+.modal-content img {
+    max-width: 100%;
+    align-items: center;
+    height: auto;
+}
+
+.modal-content {
+    width: 90% !important;
+}
+
+.upload-box:hover img {
+    filter: brightness(70%);
+    z-index: 2;
+}
+
+#fileInput:hover {
+    filter: brightness(70%);
+}
+
+.colored-box {
+    height: 25px;
+    width: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+    .colored-box:hover,
+    .colored-box:focus {
+        transform: scale(1.1);
+    }

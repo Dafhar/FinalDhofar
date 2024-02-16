@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "My Topic Page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+    <head>
+    <link href="~/css/complaints.css" rel="stylesheet" />
+    </head>
+
+    <body>
+    <!-- main content  -->
+    <div class="container-fluid main-content px-4">
+        <div class="col-12 main-header px-2 px-md-5 py-2 rounded-3 d-flex justify-content-between flex-wrap">
+            <h4 class="m-0 py-2">مواضيعي</h4>
+            <button class="btn comlaints-btn btn-sm  px-2 px-md-4" type="button" onclick="">
+                أضف موضوع جديد <span>
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </button>
+        </div>
+        <div class="table-responsive mt-4">
+            <table id="mytopics" class="table table-responsive table-hover text-center" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>نوع الموضوع</th>
+                        <th>تفاصيل الموضوع</th>
+                        <th>التقييم</th>
+                        <th>الردود</th>
+                        <th>الزوار</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الأفكار المبتكرة</td>
+                        <td>إعادة تأهيل الحدائق العامة <br><span class="username-table">Um_Ali_2020</span></td>
+                        <td>
+                            <div class="row align-items-center progress-section">
+                                <div class="col-auto p-0 d-flex align-items-center">
+                                    <i class="fa-regular fa-face-frown navy"></i>
+                                </div>
+                                <div class="col px-2">
+                                    <div class="progress">
+                                        <div class="progress-bar custom-progress-color" role="progressbar"
+                                             style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto p-0 d-flex align-items-center justify-content-end">
+                                    <i class="fa-regular fa-face-smile navy"></i>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle-container">
+                                <span class="circle"></span>
+                                <span class="circle">
+                                    <img src=@Url.Content("~/images/subject-user-img.svg")
+                                         class="subject-user-img">
+                                </span>
+                                <span class="circle"></span>
+                                ٣ ردود
+
+                            </div>
+                        </td>
+                        <td>٣١٦٣ زائر</td>
+                    </tr>
+                    <tr>
+                        <td>نقطة نقاش</td>
+                        <td>شارع النجاح بين الواقع والمفترض. <br><span class="username-table">محمد آل إبراهيم</span></td>
+                        <td>
+                            <div class="row align-items-center progress-section">
+                                <div class="col-auto p-0 d-flex align-items-center">
+                                    <i class="fa-regular fa-face-frown navy"></i>
+                                </div>
+                                <div class="col px-2">
+                                    <div class="progress">
+                                        <div class="progress-bar custom-progress-color" role="progressbar"
+                                             style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto p-0 d-flex align-items-center justify-content-end">
+                                    <i class="fa-regular fa-face-smile navy"></i>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle-container">
+                                ٠ ردود
+                            </div>
+                        </td>
+                        <td>٣٨٧ زائر</td>
+                    </tr>
+                    <tr>
+                        <td>البيئة</td>
+                        <td>مياه العيون والأفلاج <br> <span class="username-table">Salim Ali AlShahri</span></td>
+                        <td>
+                            <div class="row align-items-center progress-section">
+                                <div class="col-auto p-0 d-flex align-items-center">
+                                    <i class="fa-regular fa-face-frown navy"></i>
+                                </div>
+                                <div class="col px-2">
+                                    <div class="progress">
+                                        <div class="progress-bar custom-progress-color" role="progressbar"
+                                             style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto p-0 d-flex align-items-center justify-content-end">
+                                    <i class="fa-regular fa-face-smile navy"></i>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle-container">
+                                <span class="circle">
+                                    <img src=@Url.Content("~/images/subject-user-img.svg")
+                                         class="subject-user-img">
+                                </span>
+                                <span class="circle"></span>
+                                ٢ ردود
+                            </div>
+                        </td>
+                        <td>٣٩٣٢ زائر</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </body>
+</html>

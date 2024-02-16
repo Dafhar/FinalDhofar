@@ -1,0 +1,553 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+          integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+        
+        <title>@ViewBag.Title</title>
+
+         <link href="~/css/main.css" rel="stylesheet" />
+        <link href="~/css/complaints.css" rel="stylesheet" />
+        <link href="~/css/user-profile.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <header class="row d-flex align-items-center">
+        <div class="col-lg-7">
+            <nav class="navbar navbar-expand-lg ">
+                <div class="container-fluid d-flex">
+                    <!-- Logo -->
+                    <div>
+                        <a href="home.html" class="navbar-logo">
+                            <img src="./images/logo.svg" class="logo" alt="Logo">
+                        </a>
+                        <img src="./images/logo-phrase.svg" class="d-md-inline d-none logo-name"></img>
+                    </div>
+
+                    <!-- Toggler Button for Collapsible Navbar -->
+                    <div class="align-items-end">
+                        <button class="navbar-toggler ml-auto btn btn-sm" type="button" data-toggle="collapse"
+                                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- Login Button  -->
+                        <!-- <button class="btn btn-sm login-button d-lg-none d-md-inline d-sm-inline d-xs-inline"
+                            data-bs-target="#exampleModalToggle" data-bs-toggle="modal">سجل
+                            دخولك</button> -->
+                        <!-- modal  -->
+                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+                             aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    <div class="row">
+                                        <div class="col-lg-6 modal-login">
+                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
+                                                مرحبًا
+                                                بعودتك!
+                                            </h1>
+                                            <div id="loginForm">
+                                                <div class="mb-3">
+                                                    <label for="exampleInputEmail1" class="form-label navy">
+                                                        الإيميل /
+                                                        رقم الهاتف
+                                                    </label>
+                                                    <input type="email" class="form-control input text-end"
+                                                           id="exampleInputEmail1" placeholder="Salim.a@gmail.com">
+                                                    <div class="invalid-feedback">
+                                                        يرجى إدخال الإيميل أو رقم الهاتف.
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputPassword1" class="form-label navy">
+                                                        كلمة
+                                                        المرور
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group">
+                                                            <input type="password"
+                                                                   class="form-control input" id="exampleInputPassword1"
+                                                                   placeholder="*****">
+                                                            <span class="password-eye-btn" type="button"
+                                                                  onclick="togglePassword('exampleInputPassword1')">
+                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <button type="submit" class="btn login-form-button btn-sm px-4"
+                                                            data-bs-target="#exampleModalToggle3"
+                                                            data-bs-toggle="modal">
+                                                        تسجيل الدخول
+                                                    </button>
+                                                    <button class="btn login-form-button btn-sm px-3"
+                                                            data-bs-target="#exampleModalToggle2"
+                                                            data-bs-toggle="modal">
+                                                        تسجيل مستخدم جديد
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="navy mt-2" data-bs-target="#exampleModalToggle4"
+                                               data-bs-toggle="modal">نسيت كلمة المرور</a>
+                                        </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
+                                                 alt="Login Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="modal fade" id="exampleModalToggle2" 
+                                aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                @Html.Partial("_RegisterPartial")
+
+                            </div>
+                        <div class="modal fade" id="exampleModalToggle3" aria-hidden="true"
+                             aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    <div class="row">
+                                        <div class="col-lg-6 modal-login d-flex justify-content-center align-items-center flex-column">
+                                            <img src="./images/check-circle.svg">
+                                            <h1 class="modal-title fs-3 navy mt-4 text-center"
+                                                id="exampleModalToggleLabel">
+                                                تم التسجيل بنجاح!
+                                            </h1>
+
+                                        </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
+                                                 alt="Login Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalToggle4" aria-hidden="true"
+                             aria-labelledby="exampleModalToggleLabel4" tabindex="-1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    <div class="row">
+                                        <div class="col-lg-6 modal-login">
+                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
+                                                استرجاع كلمة المرور
+                                            </h1>
+                                            <div id="loginForm">
+                                                <div class="mb-3">
+                                                    <label for="exampleInputEmail1" class="form-label navy">
+                                                        الإيميل /
+                                                        رقم الهاتف
+                                                    </label>
+                                                    <input type="email" class="form-control input text-end"
+                                                           id="exampleInputEmail1" placeholder="Salim.a@gmail.com">
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <button type="submit"
+                                                            class="btn login-form-button btn-sm px-4">
+                                                        إرسال
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
+                                                 alt="
+                                                Login Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalToggle5" aria-hidden="true"
+                             aria-labelledby="exampleModalToggleLabel5" tabindex="-1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    <div class="row">
+                                        <div class="col-lg-6 modal-login">
+                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
+                                                إعادة تعيين كلمة المرور
+                                            </h1>
+                                            <div id="loginForm">
+                                                <div class="mb-3">
+                                                    <label for="exampleInputPassword1" class="form-label navy">
+                                                        كلمة المرور السابقة
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group">
+                                                            <input type="password"
+                                                                   class="form-control input" id="exampleInputPassword4"
+                                                                   placeholder="*****">
+                                                            <span class="password-eye-btn" type="button"
+                                                                  onclick="togglePassword('exampleInputPassword4')">
+                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputPassword1" class="form-label navy">
+                                                        كلمة المرور الجديدة
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group">
+                                                            <input type="password"
+                                                                   class="form-control input" id="exampleInputPassword5"
+                                                                   placeholder="*****">
+                                                            <span class="password-eye-btn" type="button"
+                                                                  onclick="togglePassword('exampleInputPassword5')">
+                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <button type="submit"
+                                                            class="btn login-form-button btn-sm px-4">
+                                                        تأكيد التعيين
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            <img src="./images/login-img.png"
+                                                 class="login-img d-none d-lg-flex" alt=" Login Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Signed in panel -->
+                        <button class="btn d-lg-none d-md-inline d-sm-inline d-xs-inline text-center header-icon">
+                            <img src="./images/comments-icon.svg" alt="comments-icon">
+                        </button>
+                        <button class="btn d-lg-none d-md-inline d-sm-inline d-xs-inline text-center header-icon">
+                            <img src="./images/notification-icon.svg" alt="notification-icon">
+                        </button>
+                    </div>
+
+                    <!-- Collapsible Navbar Content -->
+                    <div class="collapse navbar-collapse d-lg-flex justify-content-lg-between mr-lg-5"
+                         id="navbarNavDropdown">
+                        <!-- Navigation Links -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">الرئيسية</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    الأفكار و المقترحات
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-end arrow-item" href="#">الأفكار والمقترحات العامة</a>
+                                    <a class="dropdown-item text-end arrow-item" href="#">
+                                        حلول وأفكار تصريف مياه
+                                        الأمطار
+                                    </a>
+                                    <a class="dropdown-item text-end arrow-item" href="#">تطوير السوق المركزي</a>
+                                    <a class="dropdown-item text-end arrow-item" href="#">
+                                        مقترح لفعاليات خريف ظفار
+                                        ٢٠٢٤
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-disabled="true">الإحصائيات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact-us.html" aria-disabled="true">تواصل معنا</a>
+                            </li>
+                        </ul>
+
+                        <!-- Search Form -->
+                        <form class="form-inline my-2 my-lg-0 ml-auto d-inline d-lg-none">
+                            <div class="input-group">
+                                <input class="form-control rounded-3 searchbar" placeholder="ابحث" aria-label="Search">
+                                <span class="search-icon"><img src="./images/search-icon.svg"></span>
+                            </div>
+                        </form>
+
+                        <!-- Profile dropdown -->
+                        <div class="dropdown mt-2">
+                            <button class="btn d-inline d-lg-none border-outline btn-sm dropdown-toggle rounded-3 navy"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span><img src="./images/subject-user-img.svg" class="profile-img"></span>
+                                salimAhmed
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item text-end" href="user-profile.html">
+                                        <span>
+                                            <img src="./images/user-profile-icon.svg"
+                                                 class="user-dropdown-icons">
+                                        </span>ملفي الشخصي
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-end" href="#">
+                                        <span>
+                                            <img src="./images/key-icon.svg"
+                                                 class="user-dropdown-icons">
+                                        </span>إعادة تعيين كلمة المرور
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-end" href="#">
+                                        <span>
+                                            <img src="./images/logout-icon.svg"
+                                                 class="user-dropdown-icons">
+                                        </span>تسجيل الخروج
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div class="col-lg-5 d-flex justify-content-end align-items-center">
+            <!-- Search Form -->
+            <form class="form-inline my-2 my-lg-0 ml-auto d-none d-lg-inline">
+                <div class="input-group">
+                    <input class="form-control rounded-3 searchbar" placeholder="ابحث" aria-label="Search">
+                    <span class="search-icon"><img src="./images/search-icon.svg"></span>
+                </div>
+            </form>
+
+            <!-- Login Button -->
+            <!-- <button class="btn btn-sm login-button d-none d-lg-inline text-center" data-bs-target="#exampleModalToggle"
+                data-bs-toggle="modal">سجل دخولك</button> -->
+            <!-- Signed in panel -->
+            <!-- comments  -->
+            <div class="btn-group">
+                <button type="button" class="btn d-none d-lg-inline text-center header-icon rounded-3"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="dropdownMenu1">
+                    <img src="./images/comments-icon.svg" alt="comments-icon">
+                    <spnan class="notification-circle"></spnan>
+                </button>
+                <ul class="dropdown-menu scrollable" role="menu" aria-labelledby="dropdownMenu1" id="commentList">
+                    <!-- Dropdown menu content goes here -->
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/chat-text.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/patch-exclamation.svg"></span>تنبيه إداري: يرجى
+                            الانتباه لطريقة طرح
+                            الموا ...
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/chat-text.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/patch-exclamation.svg"></span>تنبيه إداري: يرجى
+                            الانتباه لطريقة طرح
+                            الموا ...
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!-- Read more link -->
+                    <li>
+                        <a href="#" class="dropdown-item text-end read-more gray-text text-center" role="menuitem"
+                           tabindex="-1" id="seeMore">اظهار الكل</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- notification  -->
+            <div class="btn-group">
+                <button type="button" class="btn d-none d-lg-inline text-center header-icon rounded-3"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="dropdownMenu2">
+                    <img src="./images/notification-icon.svg" alt="notification-icon">
+                    <span class="notification-circle"></span>
+                </button>
+                <ul class="dropdown-menu scrollable" role="menu" aria-labelledby="dropdownMenu2" id="notificationList">
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/chat-text.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/pin-icon.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/signpost-icon.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/person-icon.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/new-update-icon.svg"></span>لقد قام HalaHamed بالرد في
+                            موضوعك
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end arrow-item" href="#" role="menuitem" tabindex="-1">
+                            <span class="px-2"><img src="./images/patch-exclamation.svg"></span>تنبيه إداري: يرجى
+                            الانتباه لطريقة طرح
+                            الموا ...
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!-- Read more link -->
+                    <li>
+                        <a href="#" class="dropdown-item text-end read-more gray-text text-center" role="menuitem"
+                           tabindex="-1" id="seeMore2">اظهار الكل</a>
+                    </li>
+                </ul>
+            </div>
+
+                      <div class="dropdown">
+
+            <!-- Profile dropdown -->
+            <button class="btn d-none d-lg-inline border-outline btn-sm dropdown-toggle rounded-3 navy"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span><img src="./images/subject-user-img.svg" class="profile-img"></span>
+            salimAhmed
+            </button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/user-profile-icon.svg"
+            class="user-dropdown-icons"></span>ملفي الشخصي</a></li>
+            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/key-icon.svg"
+            class="user-dropdown-icons"></span>إعادة تعيين كلمة المرور</a></li>
+            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/logout-icon.svg"
+            class="user-dropdown-icons"></span>تسجيل الخروج</a></li>
+            </ul>
+            </div>
+       </div>
+    </header>
+
+
+        @RenderBody()
+
+   
+
+    <footer class="bg-light">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center flex-column flex-sm-row">
+                <div class="text-center text-sm-start mb-3 mb-sm-0">
+                    <p class="mb-0 navy">جميع الحقوق محفوظة © 2023 لبلدية ظفار</p>
+                </div>
+                <div class="text-center text-sm-end d-flex flex-column flex-sm-row align-items-center justify-content-between">
+                    <p class="mb-0 navy mx-3">تواصل معنا</p>
+                    <a href="#" class="mb-0 light-blue phone-number">99999999</a>
+                    <div class="social-icons ms-sm-2">
+                        <a href="#"><img src="./images/phone-icon.svg" alt="Phone"></a>
+                        <a href="#"><img src="./images/email-icon.svg" alt="Email"></a>
+                        <a href="#"><img src="./images/youtube-icon.svg" alt="YouTube"></a>
+                        <a href="#"><img src="./images/insta-icon.svg" alt="Instagram"></a>
+                        <a href="#"><img src="./images/x-icon.svg" alt="X"></a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <script src="~/js/script.js"></script>
+    <script src="~/js/complaints-table.js"></script>
+    <script src="~/js/complaints.js"></script>
+    <script src="~/js/subject-table.js"></script>
+    <script src="~/js/subject.js"></script>
+    <script src="~/js/favoraite-topics-table.js"></script>
+    <script src="~/js/topics-table.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            // Set the default number of items to show
+            var defaultItemsToShow = 4;
+
+            // Get the dropdown menu and the read more link
+            var dropdownMenu = $('.custom-dropdown-menu');
+            var readMoreLink = $('.read-more');
+
+            // Hide all the items except for the first defaultItemsToShow
+            dropdownMenu.find('li').not(':lt(' + defaultItemsToShow + ')').hide();
+
+            // Show the read more link
+            readMoreLink.show();
+
+            // When the read more link is clicked, show all the items
+            readMoreLink.click(function (e) {
+                e.preventDefault();
+                dropdownMenu.find('li').show();
+                readMoreLink.hide();
+            });
+        });
+    </script>
+
+    <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#yourRichTextEditorId',
+            // Add any configuration options you need
+        });
+    </script>
+       @RenderSection("Scripts", required: false)
+
+</body>
+</html>

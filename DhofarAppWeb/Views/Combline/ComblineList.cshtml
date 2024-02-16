@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "ComblineList page";
+    Layout = "~/views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+          integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- DataTables Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/complaints.css">
+
+    <title>My Complaints</title>
+</head>
+
+
+<body>
+    <!-- main content  -->
+    <div class="container-fluid main-content px-4">
+        <div class="col-12 main-header px-2 px-md-5 py-2 rounded-3 d-flex justify-content-between flex-wrap">
+            <h4 class="m-0 py-2">أنشئ بلاغ أو شكوى</h4>
+            <button class="btn comlaints-btn btn-sm  px-2 px-md-4" type="button" onclick="goToComplaints()">
+                أضف بلاغ جديد <span>
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </button>
+        </div>
+        <div class="table-responsive mt-4">
+            <table id="mycomplaints" class="table table-responsive table-hover text-center" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>دائرة الشكوى</th>
+                        <th>عنوان الشكوى</th>
+                        <th>نوع الخدمة</th>
+                        <th>تاريخ الإنشاء</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>النظافة العامة</td>
+                        <td>إعادة تأهيل الحدائق العامة</td>
+                        <td>طلب نظافة عام</td>
+                        <td>٢٣ ابريل ٢٠٢٣</td>
+                        <td>جديد</td>
+                    </tr>
+                    <tr>
+                        <td>النظافة العامة</td>
+                        <td>مياه العيون والأفلاج</td>
+                        <td>طلب نظافة عام</td>
+                        <td>٢٣ ابريل ٢٠٢٣</td>
+                        <td>قيد العمل</td>
+                    </tr>
+                    <tr>
+                        <td>النظافة العامة</td>
+                        <td>شارع النجاح بين الواقع والمفترض.</td>
+                        <td>طلب نظافة عام</td>
+                        <td>٢٣ ابريل ٢٠٢٣</td>
+                        <td>مغلق</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+    </html>
+
