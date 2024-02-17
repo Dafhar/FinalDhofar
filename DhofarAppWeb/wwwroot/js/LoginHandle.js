@@ -2,6 +2,18 @@
     $('#exampleModalToggle form').submit(function (e) {
         e.preventDefault(); // Prevent the form from submitting normally
 
+        $('#exampleModalToggle3').on('hidden.bs.modal', function (e) {
+            $('.modal-backdrop').remove();
+        });
+
+        $('#exampleModalToggle2').on('hidden.bs.modal', function (e) {
+            $('.modal-backdrop').remove();
+        });
+
+        // Clear previous error messages
+        $('.text-danger').empty();
+        $('#loginErrors').empty(); // Clear login errors
+
         $.ajax({
             url: '/User/Login',
             type: 'POST',
@@ -11,24 +23,19 @@
                 if (response.success) {
                     $('#exampleModalToggle').modal('hide');
                     $('#exampleModalToggle3').modal('show');
-                } else {
-                    if (response.errors) {
-                        // Clear previous error messages
-                        $('.text-danger').empty();
-
-                        // Display validation errors in the form
-                        $.each(response.errors, function (key, value) {
-                            if (key === 0) {
-                                $('[name="Password"]').siblings('.text-danger').text(value);
-                                console.log(key);
-                            } else if (key === 1) {
-                                $('[name="PhoneNumber"]').siblings('.text-danger').text(value);
-                                console.log(key);
-                            }
-                        });
-                    }
-
                 }
+                else if (response.errors && response.errors.hasOwnProperty("InvalidLogin")) {
+                    $('#loginErrors').text('Invalid login. Please try again.');
+                } 
+                else if (response.errors) {
+                    $.each(response.errors, function (key, value) {
+                        $('[name="' + key + '"]').siblings('.text-danger').text(value);
+                    });
+                }
+               else {
+                    $('#loginErrors').text('Login failed. Please try again later.');
+                }
+
             },
             error: function () {
                 // Handle AJAX errors

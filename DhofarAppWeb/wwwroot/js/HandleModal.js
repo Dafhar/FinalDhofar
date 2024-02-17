@@ -2,6 +2,14 @@
     // When the user submits the Register form, prevent the default form submission and call the Register action method
     $("#exampleModalToggle2 form").submit(function (event) {
         event.preventDefault();
+        $('#exampleModalToggle3').on('hidden.bs.modal', function (e) {
+            $('.modal-backdrop').remove();
+        });
+        $('#exampleModalToggle').on('hidden.bs.modal', function (e) {
+            $('.modal-backdrop').remove();
+        });
+        // Clear previous error messages
+        $('.text-danger').empty();
 
         $.ajax({
             url: '/User/Register',
@@ -11,57 +19,27 @@
             success: function (response) {
                 // If the registration was successful, display the Confirm modal
                 if (response.success) {
+                    // Hide the registration modal
+                    $('#exampleModalToggle2').modal('hide');
+                    // Show the confirmation modal
                     $("#exampleModalToggle3").modal("show");
+                //    $("#exampleModalToggle3").modal("show");
                 } else {
                     if (response.errors) {
-
-                        $('.text-danger').empty();
+                        // Update error messages based on response
                         $.each(response.errors, function (key, value) {
-                            if (key === 0) {
-                                $('[name="Email"]').siblings('.text-danger').text(value);
-
-                                
-                            }
-                            else if (key === 1) {
-                                $('[name="Fullname"]').siblings('.text-danger').text(value);
-
-                                
-
-                            }
-                            else if (key === 2) {
-                                $('[name="Password"]').siblings('.text-danger').text(value);
-
-                                
-
-                            }
-                            else if (key === 3) {
-                                $('[name="UserName"]').siblings('.text-danger').text(value);
-
-                                
-
-                            }
-                            else if (key === 4) {
-                                $('[name="PhoneNumber"]').siblings('.text-danger').text(value);
-
-                                
-
-                            }
-                            else if (key === 5) {
-                                $('[name="ConfirmPassword"]').siblings('.text-danger').text(value);
-
-                                
-
-                            }
-
+                            $('[name="' + key + '"]').siblings('.text-danger').text(value);
                         });
                     }
-                    // If there were errors, display them in the Join Us modal
-                    
+                    else {
+                        // Display a general error message
+                        $('#registrationErrors').text('Registration failed. Please try again later.');
+                    }
                 }
             },
             error: function () {
-                alert('An error occurred while processing your request.');
+                $('#registrationErrors').text('An error occurred while processing your request.');
             }
         });
-    });   
+    });
 });
