@@ -1,0 +1,87 @@
+﻿@model DhofarAppWeb.Dtos.User.LoginInputDTO
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            <div class="row">
+                <div class="col-lg-6 modal-login">
+                    <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
+                        مرحبًا
+                        بعودتك!
+                    </h1>
+                    <form method="post" asp-controller="User" asp-action="Login" id="loginForm">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label navy">
+                                الإيميل /
+                                رقم الهاتف
+                            </label>
+                            <input asp-for="PhoneNumber" type="text" class="form-control input text-end" placeholder="9999 9999 99" name="PhoneNumber">
+
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label asp-for="Password" class="form-label navy">
+                                    كلمة
+                                    المرور
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <input asp-for="Password" type="password"
+                                               class="form-control input"
+                                               id="loginModal" placeholder="*****">
+                                        <span class="password-eye-btn" type="button"
+                                              onclick="togglePassword('loginModal')">
+                                            <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                                        </span>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <input type="submit" class="btn login-form-button btn-sm px-4" value="تسجيل الدخول" />
+                                
+                          
+                        </div>
+                    </form>
+                    <button class="btn login-form-button btn-sm px-3"
+                            data-bs-target="#exampleModalToggle2"
+                            data-bs-toggle="modal">
+                        تسجيل مستخدم جديد
+                    </button>
+                    <a href="#" class="navy mt-2" data-bs-target="#exampleModalToggle4"
+                       data-bs-toggle="modal">نسيت كلمة المرور</a>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-end">
+                    <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
+                         alt="Login Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

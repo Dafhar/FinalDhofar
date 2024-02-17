@@ -6,19 +6,20 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+@*     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
           integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"> *@
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         
         <title>@ViewBag.Title</title>
 
          <link href="~/css/main.css" rel="stylesheet" />
         <link href="~/css/complaints.css" rel="stylesheet" />
         <link href="~/css/user-profile.css" rel="stylesheet" />
+
 
 
 </head>
@@ -50,200 +51,15 @@
                             data-bs-target="#exampleModalToggle" data-bs-toggle="modal">سجل
                             دخولك</button> -->
                         <!-- modal  -->
-                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
-                             aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    <div class="row">
-                                        <div class="col-lg-6 modal-login">
-                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
-                                                مرحبًا
-                                                بعودتك!
-                                            </h1>
-                                            <div id="loginForm">
-                                                <div class="mb-3">
-                                                    <label for="exampleInputEmail1" class="form-label navy">
-                                                        الإيميل /
-                                                        رقم الهاتف
-                                                    </label>
-                                                    <input type="email" class="form-control input text-end"
-                                                           id="exampleInputEmail1" placeholder="Salim.a@gmail.com">
-                                                    <div class="invalid-feedback">
-                                                        يرجى إدخال الإيميل أو رقم الهاتف.
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleInputPassword1" class="form-label navy">
-                                                        كلمة
-                                                        المرور
-                                                    </label>
-                                                    <div class="input-group">
-                                                        <div class="input-group">
-                                                            <input type="password"
-                                                                   class="form-control input" id="exampleInputPassword1"
-                                                                   placeholder="*****">
-                                                            <span class="password-eye-btn" type="button"
-                                                                  onclick="togglePassword('exampleInputPassword1')">
-                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-3">
-                                                    <button type="submit" class="btn login-form-button btn-sm px-4"
-                                                            data-bs-target="#exampleModalToggle3"
-                                                            data-bs-toggle="modal">
-                                                        تسجيل الدخول
-                                                    </button>
-                                                    <button class="btn login-form-button btn-sm px-3"
-                                                            data-bs-target="#exampleModalToggle2"
-                                                            data-bs-toggle="modal">
-                                                        تسجيل مستخدم جديد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="navy mt-2" data-bs-target="#exampleModalToggle4"
-                                               data-bs-toggle="modal">نسيت كلمة المرور</a>
-                                        </div>
-                                        <div class="col-lg-6 d-flex justify-content-end">
-                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
-                                                 alt="Login Image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="modal fade" id="exampleModalToggle2" 
-                                aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                                @Html.Partial("_RegisterPartial")
+                        @await Html.PartialAsync("_LoginModal")
 
-                            </div>
-                        <div class="modal fade" id="exampleModalToggle3" aria-hidden="true"
-                             aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    <div class="row">
-                                        <div class="col-lg-6 modal-login d-flex justify-content-center align-items-center flex-column">
-                                            <img src="./images/check-circle.svg">
-                                            <h1 class="modal-title fs-3 navy mt-4 text-center"
-                                                id="exampleModalToggleLabel">
-                                                تم التسجيل بنجاح!
-                                            </h1>
+                        @await Html.PartialAsync("_JoinUsModal")
 
-                                        </div>
-                                        <div class="col-lg-6 d-flex justify-content-end">
-                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
-                                                 alt="Login Image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @await Html.PartialAsync("_ConfirmModal")
 
-                        <div class="modal fade" id="exampleModalToggle4" aria-hidden="true"
-                             aria-labelledby="exampleModalToggleLabel4" tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    <div class="row">
-                                        <div class="col-lg-6 modal-login">
-                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
-                                                استرجاع كلمة المرور
-                                            </h1>
-                                            <div id="loginForm">
-                                                <div class="mb-3">
-                                                    <label for="exampleInputEmail1" class="form-label navy">
-                                                        الإيميل /
-                                                        رقم الهاتف
-                                                    </label>
-                                                    <input type="email" class="form-control input text-end"
-                                                           id="exampleInputEmail1" placeholder="Salim.a@gmail.com">
-                                                </div>
-                                                <div class="d-flex justify-content-between">
-                                                    <button type="submit"
-                                                            class="btn login-form-button btn-sm px-4">
-                                                        إرسال
-                                                    </button>
-                                                </div>
-                                            </div>
+                        @await Html.PartialAsync("_ForgetPasswordModal")
 
-                                        </div>
-                                        <div class="col-lg-6 d-flex justify-content-end">
-                                            <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
-                                                 alt="
-                                                Login Image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="exampleModalToggle5" aria-hidden="true"
-                             aria-labelledby="exampleModalToggleLabel5" tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    <div class="row">
-                                        <div class="col-lg-6 modal-login">
-                                            <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
-                                                إعادة تعيين كلمة المرور
-                                            </h1>
-                                            <div id="loginForm">
-                                                <div class="mb-3">
-                                                    <label for="exampleInputPassword1" class="form-label navy">
-                                                        كلمة المرور السابقة
-                                                    </label>
-                                                    <div class="input-group">
-                                                        <div class="input-group">
-                                                            <input type="password"
-                                                                   class="form-control input" id="exampleInputPassword4"
-                                                                   placeholder="*****">
-                                                            <span class="password-eye-btn" type="button"
-                                                                  onclick="togglePassword('exampleInputPassword4')">
-                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleInputPassword1" class="form-label navy">
-                                                        كلمة المرور الجديدة
-                                                    </label>
-                                                    <div class="input-group">
-                                                        <div class="input-group">
-                                                            <input type="password"
-                                                                   class="form-control input" id="exampleInputPassword5"
-                                                                   placeholder="*****">
-                                                            <span class="password-eye-btn" type="button"
-                                                                  onclick="togglePassword('exampleInputPassword5')">
-                                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between">
-                                                    <button type="submit"
-                                                            class="btn login-form-button btn-sm px-4">
-                                                        تأكيد التعيين
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-lg-6 d-flex justify-content-end">
-                                            <img src="./images/login-img.png"
-                                                 class="login-img d-none d-lg-flex" alt=" Login Image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @await Html.PartialAsync("_ResetPasswordModal")
 
                         <!-- Signed in panel -->
                         <button class="btn d-lg-none d-md-inline d-sm-inline d-xs-inline text-center header-icon">
@@ -313,13 +129,13 @@
                                         </span>ملفي الشخصي
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item text-end" href="#">
+                                <li >
+                                    <div class="dropdown-item text-end box" data-bs-target="#exampleModalToggle5" data-bs-toggle="modal">
                                         <span>
                                             <img src="./images/key-icon.svg"
                                                  class="user-dropdown-icons">
                                         </span>إعادة تعيين كلمة المرور
-                                    </a>
+                                    </div>
                                 </li>
                                 <li>
                                     <a class="dropdown-item text-end" href="#">
@@ -454,24 +270,42 @@
                 </ul>
             </div>
 
-                      <div class="dropdown">
+            <div class="dropdown">
 
-            <!-- Profile dropdown -->
-            <button class="btn d-none d-lg-inline border-outline btn-sm dropdown-toggle rounded-3 navy"
-            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span><img src="./images/subject-user-img.svg" class="profile-img"></span>
-            salimAhmed
-            </button>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/user-profile-icon.svg"
-            class="user-dropdown-icons"></span>ملفي الشخصي</a></li>
-            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/key-icon.svg"
-            class="user-dropdown-icons"></span>إعادة تعيين كلمة المرور</a></li>
-            <li><a class="dropdown-item text-end" href="#"><span><img src="assets/images/logout-icon.svg"
-            class="user-dropdown-icons"></span>تسجيل الخروج</a></li>
-            </ul>
+                <!-- Profile dropdown -->
+                <button class="btn d-none d-lg-inline border-outline btn-sm dropdown-toggle rounded-3 navy"
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><img src="./images/subject-user-img.svg" class="profile-img"></span>
+                    salimAhmed
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item text-end" href="#">
+                            <span>
+                                <img src="./images/user-profile-icon.svg"
+                                     class="user-dropdown-icons">
+                            </span>ملفي الشخصي
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-item text-end" data-bs-target="#exampleModalToggle5" data-bs-toggle="modal">
+                            <span>
+                                <img src="./images/key-icon.svg"
+                                     class="user-dropdown-icons">
+                            </span>إعادة تعيين كلمة المرور
+                        </div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-end" href="#">
+                            <span>
+                                <img src="./images/logout-icon.svg"
+                                     class="user-dropdown-icons">
+                            </span>تسجيل الخروج
+                        </a>
+                    </li>
+                </ul>
             </div>
-       </div>
+        </div>
     </header>
 
 
@@ -508,14 +342,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
-    <script src="~/js/script.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+@*     <script src="~/js/script.js"></script>
     <script src="~/js/complaints-table.js"></script>
     <script src="~/js/complaints.js"></script>
     <script src="~/js/subject-table.js"></script>
     <script src="~/js/subject.js"></script>
     <script src="~/js/favoraite-topics-table.js"></script>
-    <script src="~/js/topics-table.js"></script>
-    
+    <script src="~/js/topics-table.js"></script> *@
+    <script src="~/js/HandleModal.js"></script>
+    <script src="~/js/LoginHandle.js"></script>
+
     <script>
         $(document).ready(function () {
             // Set the default number of items to show

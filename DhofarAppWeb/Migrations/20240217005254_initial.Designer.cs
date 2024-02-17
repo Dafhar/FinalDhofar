@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DhofarAppWeb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240209232712_finialAPI")]
-    partial class finialAPI
+    [Migration("20240217005254_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,20 @@ namespace DhofarAppWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name_Ar = "الفئة 1",
+                            Name_En = "Category 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name_Ar = "الفئة 2",
+                            Name_En = "Category 2"
+                        });
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.Colors", b =>
@@ -54,7 +68,7 @@ namespace DhofarAppWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("HexColor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -66,22 +80,22 @@ namespace DhofarAppWeb.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Red"
+                            HexColor = "#FF0000"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Orange"
+                            HexColor = "#FFA500"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Blue"
+                            HexColor = "#0000FF"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Green"
+                            HexColor = "#008000"
                         });
                 });
 
@@ -95,6 +109,10 @@ namespace DhofarAppWeb.Migrations
 
                     b.Property<int>("CommentSubjectId")
                         .HasColumnType("int");
+
+                    b.Property<string>("File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReplyComment")
                         .IsRequired()
@@ -182,11 +200,7 @@ namespace DhofarAppWeb.Migrations
                     b.Property<bool>("MySpecialist")
                         .HasColumnType("bit");
 
-                    b.Property<string>("State_Ar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State_En")
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -201,11 +215,7 @@ namespace DhofarAppWeb.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title_Ar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title_En")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -236,9 +246,6 @@ namespace DhofarAppWeb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FilePaths")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Filename")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1466,6 +1473,20 @@ namespace DhofarAppWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DepartmentTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name_Ar = "نوع القسم 1",
+                            Name_En = "DepartmentType 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name_Ar = "نوع القسم 2",
+                            Name_En = "DepartmentType 2"
+                        });
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.DeviceToken", b =>
@@ -1524,6 +1545,27 @@ namespace DhofarAppWeb.Migrations
                     b.ToTable("IdentityNumbers");
                 });
 
+            modelBuilder.Entity("DhofarAppWeb.Model.MainTopic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title_Ar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_En")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainTopices");
+                });
+
             modelBuilder.Entity("DhofarAppWeb.Model.OnBoardScreen", b =>
                 {
                     b.Property<int>("Id")
@@ -1544,10 +1586,6 @@ namespace DhofarAppWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WelcomeMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("OnBoardScreens");
@@ -1556,18 +1594,16 @@ namespace DhofarAppWeb.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Description goes here  .... ",
-                            ImageUrl = "image url",
-                            Title = "Your title",
-                            WelcomeMessage = "Your Welcome message goes here!"
+                            Description = "يتيح تطبيق ضع بصمتك التابع لبلدية ظفار وسيلة فعّالة لمشاركة الأفكار بين المواطنين والسلطات المحلية بسهولة. مما يسهم في خلق بيئة تشجع ",
+                            ImageUrl = ".uploads/b8f808a9-5cb4-43c9-a294-3d8abfefa36f_onboard_1 (1).png",
+                            Title = "شاركنا أفكارك"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Second Description goes here  .... ",
-                            ImageUrl = "image url",
-                            Title = "Your title",
-                            WelcomeMessage = "Your second Welcome message goes here!"
+                            Description = "قم بالإبلاغ عن المشكلات وحلها بكفاءة من خلال تقديم طلب في التطبيق واستمتع بتجربة سلسة في التعبير عن مخاوفك. ويمكنك تتبع طلبك بسهولة عن بعد.",
+                            ImageUrl = "uploads/a3cfa779-1119-47f3-b801-5084b664a3e2_onboard_2.png",
+                            Title = "قدم شكوى أو بلاغ"
                         });
                 });
 
@@ -1673,6 +1709,22 @@ namespace DhofarAppWeb.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name_Ar = "الفئة الفرعية 1",
+                            Name_En = "Subcategory 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Name_Ar = "الفئة الفرعية 2",
+                            Name_En = "Subcategory 2"
+                        });
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.Subject", b =>
@@ -1682,6 +1734,9 @@ namespace DhofarAppWeb.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1731,9 +1786,6 @@ namespace DhofarAppWeb.Migrations
                     b.Property<string>("FilePaths")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Filename")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
@@ -1752,6 +1804,9 @@ namespace DhofarAppWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("MainTopicId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name_Ar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1766,7 +1821,25 @@ namespace DhofarAppWeb.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MainTopicId");
+
                     b.ToTable("SubjectTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name_Ar = "النوع 1",
+                            Name_En = "Type 1",
+                            TitleValue = "Type 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name_Ar = "النوع 2",
+                            Name_En = "Type 2",
+                            TitleValue = "Type 2"
+                        });
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.User", b =>
@@ -1783,6 +1856,9 @@ namespace DhofarAppWeb.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -1823,6 +1899,9 @@ namespace DhofarAppWeb.Migrations
                     b.Property<DateTime>("LogInDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("MyColor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1844,7 +1923,6 @@ namespace DhofarAppWeb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SelectedLanguage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Sound")
@@ -2334,6 +2412,13 @@ namespace DhofarAppWeb.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("DhofarAppWeb.Model.SubjectType", b =>
+                {
+                    b.HasOne("DhofarAppWeb.Model.MainTopic", null)
+                        .WithMany("subjectTypes")
+                        .HasForeignKey("MainTopicId");
+                });
+
             modelBuilder.Entity("DhofarAppWeb.Model.UserColors", b =>
                 {
                     b.HasOne("DhofarAppWeb.Model.Colors", "Colors")
@@ -2343,7 +2428,7 @@ namespace DhofarAppWeb.Migrations
                         .IsRequired();
 
                     b.HasOne("DhofarAppWeb.Model.User", "User")
-                        .WithMany("UserColors")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2476,6 +2561,11 @@ namespace DhofarAppWeb.Migrations
                     b.Navigation("DepartmentAdmins");
                 });
 
+            modelBuilder.Entity("DhofarAppWeb.Model.MainTopic", b =>
+                {
+                    b.Navigation("subjectTypes");
+                });
+
             modelBuilder.Entity("DhofarAppWeb.Model.Poll", b =>
                 {
                     b.Navigation("Options");
@@ -2523,8 +2613,6 @@ namespace DhofarAppWeb.Migrations
                     b.Navigation("RatingSubjects");
 
                     b.Navigation("Subjects");
-
-                    b.Navigation("UserColors");
 
                     b.Navigation("UserVotes");
 

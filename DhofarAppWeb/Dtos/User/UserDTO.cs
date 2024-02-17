@@ -10,8 +10,6 @@ namespace DhofarAppWeb.Dtos.User
 
         public string UserName { get; set; }
 
-        public string Token { get; set; }
-
         public IList<string> Roles { get; set; }
     }
 }

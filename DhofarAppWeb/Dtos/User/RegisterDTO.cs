@@ -25,9 +25,9 @@ namespace DhofarAppWeb.Dtos.User
         [Required]
         public string PhoneNumber { get; set; }
 
-        //[Required]
-        //public string CodeNumber { get; set; }
+        [Required]
+        public string CodeNumber { get; set; } = "+123";
 
-      
+
     }
 }

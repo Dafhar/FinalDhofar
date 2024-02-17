@@ -1,5 +1,7 @@
 using DhofarAppWeb.Data;
 using DhofarAppWeb.Model;
+using DhofarAppWeb.Model.Interface;
+using DhofarAppWeb.Model.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,8 +29,12 @@ namespace DhofarAppWeb
                       (options =>
                         {
                               options.User.RequireUniqueEmail = true;
-                       }).AddEntityFrameworkStores<AppDbContext>();
+                       }).AddEntityFrameworkStores<AppDbContext>()
+                       .AddDefaultTokenProviders(); ;
 
+           
+
+            builder.Services.AddTransient<IUser, IdentityUserServices>();
 
             builder.Services.AddAuthorization(options =>
             {
@@ -38,8 +44,18 @@ namespace DhofarAppWeb
                 options.AddPolicy("Delete", policy => policy.RequireClaim("Permissions", "Delete"));
             });
 
+            builder.Services.AddAuthorization();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/User/Login"; // Set the correct path to your login action
+            });
 
             var app = builder.Build();
+
+           
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

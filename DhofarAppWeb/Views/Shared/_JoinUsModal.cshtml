@@ -1,0 +1,165 @@
+﻿@model  DhofarAppWeb.Dtos.User.RegisterDTO
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Join Us";
+
+}
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close p-3 d-flex justify-content-start"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="col-lg-6 modal-login">
+                <h1 class="modal-title fs-3 navy mb-4" id="exampleModalToggleLabel">
+                    أهلًا بك بيننا!
+                </h1>
+                <div>
+                    <form method="post" asp-action="Register" asp-controller="User" id="register-form">
+                        <div class="mb-3">
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    <label asp-for="Fullname" class="form-label navy">
+                                        الاسم
+                                        الكامل
+                                    </label>
+                                    <input asp-for="Fullname" type="text" class="form-control input text-end"
+                                           id="fullName" placeholder="Salim ahmad">
+                                    <span asp-validation-for="Fullname" class="text-danger"></span>
+                                </div>
+                                
+
+                                <div class="col-lg-6">
+                                    <label asp-for="UserName" class="form-label navy">اسم المستخدم</label>
+                                    <input asp-for="UserName" class="form-control input text-end" id="userName"
+                                           placeholder="salimAhmed">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+
+                                </div>
+                               
+
+                                
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    <label asp-for="PhoneNumber" class="form-label navy">
+                                        رقم الهاتف
+                                        النقال
+                                    </label>
+                                    <div class="input-group">
+                                        <input asp-for="PhoneNumber" type="text"
+                                               class="form-control input text-end custom-placeholder"
+                                               id="phoneNumber" placeholder="999999">
+
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                                    </div>
+                                  
+
+                                    
+                                    <span class="input-group-text">
+                                        <img src="./images/oman-flag.svg" alt="Flag"
+                                             class="flag">
+                                    </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label asp-for="Email" class="form-label navy">
+                                        الإيميل /
+                                        رقم
+                                        الهاتف
+                                    </label>
+                                    <input asp-for="Email" class="form-control input text-end"
+                                           id="email" placeholder="Salim.a@gmail.com">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label asp-for="Password" class="form-label navy">
+                                        كلمة
+                                        المرور
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <input asp-for="Password" type="password"
+                                                   class="form-control input"
+                                                   id="exampleInputPassword2" placeholder="*****">
+                                            <span class="password-eye-btn" type="button"
+                                                  onclick="togglePassword('exampleInputPassword2')">
+                                                <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                                            </span>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                                        </div>
+
+                                    </div>
+                                   
+
+                                    
+                                </div>
+                                <div class="col-lg-6">
+                                    <label asp-for="ConfirmPassword" class="form-label navy">
+                                        تأكيد كلمة
+                                        المرور
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <input asp-for="ConfirmPassword"  type="password"
+                                                   class="form-control input"
+                                                   id="exampleInputPassword3" placeholder="*****">
+                                            <span class="password-eye-btn" type="button"
+                                                  onclick="togglePassword('exampleInputPassword3')">
+                                                <i id="eyeIcon3" class="fa-regular fa-eye"></i>
+                                            </span>
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                                        </div>
+
+                                    </div>
+                                   
+
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                            <button type="submit" class="btn login-form-button btn-sm px-3">
+                                تسجيل
+                                مستخدم جديد
+                            </button>
+                    </form>
+                     <div class="modal-body">
+                hello
+            </div>
+
+
+                    <button class="btn login-form-button btn-sm px-4 mx-3"
+                            data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                        لدي
+                        حساب
+                    </button>
+
+                </div>
+            </div>
+            <div class="row justify-content-between">
+
+                <div class="col-lg-12 d-flex justify-content-end">
+                    <img src="./images/login-img.png" class="login-img d-none d-lg-flex"
+                         alt="Login Image">
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
