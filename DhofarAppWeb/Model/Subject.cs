@@ -6,7 +6,7 @@
 
         public string UserId { get; set; }
 
-        public int SubjectTypeId { get; set; }
+        public int GeneralSubjectsTypesId { get; set; }
 
         public string PrimarySubject { get; set; }
 
@@ -32,7 +32,9 @@
 
         public List<FavoriteSubject>? FavoriteSubjects { get; set; }
 
-        public SubjectType SubjectType { get; set; }
+        public List<SubjectType> SubjectTypes { get; set; }
+
+        public GeneralSubjectsType GeneralSubjectsTypes { get; set; }
 
         public User User { get; set; }
         public Poll? Poll { get; set; }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DhofarApp.Data.Seeder;
+using System.Reflection.Emit;
 
 namespace DhofarAppWeb.Data
 {
@@ -23,7 +24,7 @@ namespace DhofarAppWeb.Data
 
         public DbSet<Subject> Subjects { get; set; }
 
-        public DbSet<SubjectType> SubjectTypes { get; set; }
+        public DbSet<GeneralSubjectsType> GeneralSubjectsTypes { get; set; }
 
         public DbSet<SubjectFiles> SubjectFiles { get; set; }
 
@@ -57,7 +58,7 @@ namespace DhofarAppWeb.Data
         public DbSet<Visitor> Visitors { get; set; }
 
         public DbSet<Colors> Colors { get; set; }
-        public DbSet<MainTopic> MainTopices { get; set; }
+        public DbSet<SubjectType> SubjectTypes { get; set; }
 
 
         public DbSet<OnBoardScreen> OnBoardScreens { get; set; }
@@ -216,6 +217,29 @@ namespace DhofarAppWeb.Data
             builder.Entity<UserColors>()
                .HasKey(uc => new { uc.UserId, uc.ColorsId });
 
+
+
+            builder.Entity<Subject>()
+            .HasMany(s => s.SubjectTypes)
+            .WithMany(st => st.Subjects)
+            .UsingEntity<Dictionary<string, object>>(
+                "SubjectSubjectType",
+                j => j
+                    .HasOne<SubjectType>()
+                    .WithMany()
+                    .HasForeignKey("SubjectTypeId"),
+                j => j
+                    .HasOne<Subject>()
+                    .WithMany()
+                    .HasForeignKey("SubjectId"),
+                j =>
+                {
+                    j.HasKey("SubjectId", "SubjectTypeId");
+                    j.ToTable("SubjectSubjectTypes");
+                });
+
+
+
             builder.Entity<Colors>().HasData(
                 new Colors { Id = 1, HexColor = "#FF0000" },
                 new Colors { Id = 2, HexColor = "#FFA500" },
@@ -241,9 +265,9 @@ namespace DhofarAppWeb.Data
                 // Add more subcategories as needed
             );
 
-            builder.Entity<SubjectType>().HasData(
-                new SubjectType { Id = 1, TitleValue = "Type 1", Name_Ar = "النوع 1", Name_En = "Type 1" },
-                new SubjectType { Id = 2, TitleValue = "Type 2", Name_Ar = "النوع 2", Name_En = "Type 2" }
+            builder.Entity<GeneralSubjectsType>().HasData(
+                new GeneralSubjectsType { Id = 1, /*Title = "Type 1",*/ Name_Ar = "النوع 1", Name_En = "Type 1" },
+                new GeneralSubjectsType { Id = 2, /*Title = "Type 2",*/ Name_Ar = "النوع 2", Name_En = "Type 2" }
                 // Add more subject types as needed
             );
 
