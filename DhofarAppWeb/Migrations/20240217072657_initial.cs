@@ -122,6 +122,20 @@ namespace DhofarAppWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GeneralSubjectsTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralSubjectsTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityNumbers",
                 columns: table => new
                 {
@@ -132,20 +146,6 @@ namespace DhofarAppWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdentityNumbers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MainTopices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MainTopices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -161,6 +161,21 @@ namespace DhofarAppWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OnBoardScreens", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    Title_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -415,54 +430,13 @@ namespace DhofarAppWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubjectTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TitleValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name_En = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MainTopicId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectTypes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubjectTypes_MainTopices_MainTopicId",
-                        column: x => x.MainTopicId,
-                        principalTable: "MainTopices",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ComplaintsFiles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ComplaintId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ComplaintsFiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ComplaintsFiles_Complaints_ComplaintId",
-                        column: x => x.ComplaintId,
-                        principalTable: "Complaints",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subjects",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SubjectTypeId = table.Column<int>(type: "int", nullable: false),
+                    GeneralSubjectsTypesId = table.Column<int>(type: "int", nullable: false),
                     PrimarySubject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -481,9 +455,29 @@ namespace DhofarAppWeb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Subjects_SubjectTypes_SubjectTypeId",
-                        column: x => x.SubjectTypeId,
-                        principalTable: "SubjectTypes",
+                        name: "FK_Subjects_GeneralSubjectsTypes_GeneralSubjectsTypesId",
+                        column: x => x.GeneralSubjectsTypesId,
+                        principalTable: "GeneralSubjectsTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ComplaintsFiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComplaintId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComplaintsFiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComplaintsFiles_Complaints_ComplaintId",
+                        column: x => x.ComplaintId,
+                        principalTable: "Complaints",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -605,6 +599,30 @@ namespace DhofarAppWeb.Migrations
                     table.PrimaryKey("PK_SubjectFiles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SubjectFiles_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectSubjectTypes",
+                columns: table => new
+                {
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    SubjectTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectSubjectTypes", x => new { x.SubjectId, x.SubjectTypeId });
+                    table.ForeignKey(
+                        name: "FK_SubjectSubjectTypes_SubjectTypes_SubjectTypeId",
+                        column: x => x.SubjectTypeId,
+                        principalTable: "SubjectTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectSubjectTypes_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
@@ -962,21 +980,21 @@ namespace DhofarAppWeb.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "GeneralSubjectsTypes",
+                columns: new[] { "Id", "Name_Ar", "Name_En" },
+                values: new object[,]
+                {
+                    { 1, "النوع 1", "Type 1" },
+                    { 2, "النوع 2", "Type 2" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "OnBoardScreens",
                 columns: new[] { "Id", "Description", "ImageUrl", "Title" },
                 values: new object[,]
                 {
                     { 1, "يتيح تطبيق ضع بصمتك التابع لبلدية ظفار وسيلة فعّالة لمشاركة الأفكار بين المواطنين والسلطات المحلية بسهولة. مما يسهم في خلق بيئة تشجع ", ".uploads/b8f808a9-5cb4-43c9-a294-3d8abfefa36f_onboard_1 (1).png", "شاركنا أفكارك" },
                     { 2, "قم بالإبلاغ عن المشكلات وحلها بكفاءة من خلال تقديم طلب في التطبيق واستمتع بتجربة سلسة في التعبير عن مخاوفك. ويمكنك تتبع طلبك بسهولة عن بعد.", "uploads/a3cfa779-1119-47f3-b801-5084b664a3e2_onboard_2.png", "قدم شكوى أو بلاغ" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "SubjectTypes",
-                columns: new[] { "Id", "MainTopicId", "Name_Ar", "Name_En", "TitleValue" },
-                values: new object[,]
-                {
-                    { 1, null, "النوع 1", "Type 1", "Type 1" },
-                    { 2, null, "النوع 2", "Type 2", "Type 2" }
                 });
 
             migrationBuilder.InsertData(
@@ -1114,9 +1132,9 @@ namespace DhofarAppWeb.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_SubjectTypeId",
+                name: "IX_Subjects_GeneralSubjectsTypesId",
                 table: "Subjects",
-                column: "SubjectTypeId");
+                column: "GeneralSubjectsTypesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_UserId",
@@ -1124,9 +1142,9 @@ namespace DhofarAppWeb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubjectTypes_MainTopicId",
-                table: "SubjectTypes",
-                column: "MainTopicId");
+                name: "IX_SubjectSubjectTypes_SubjectTypeId",
+                table: "SubjectSubjectTypes",
+                column: "SubjectTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserColors_ColorsId",
@@ -1211,6 +1229,9 @@ namespace DhofarAppWeb.Migrations
                 name: "SubjectFiles");
 
             migrationBuilder.DropTable(
+                name: "SubjectSubjectTypes");
+
+            migrationBuilder.DropTable(
                 name: "UserColors");
 
             migrationBuilder.DropTable(
@@ -1227,6 +1248,9 @@ namespace DhofarAppWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "Complaints");
+
+            migrationBuilder.DropTable(
+                name: "SubjectTypes");
 
             migrationBuilder.DropTable(
                 name: "Colors");
@@ -1253,10 +1277,7 @@ namespace DhofarAppWeb.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "SubjectTypes");
-
-            migrationBuilder.DropTable(
-                name: "MainTopices");
+                name: "GeneralSubjectsTypes");
         }
     }
 }
