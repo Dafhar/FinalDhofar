@@ -39,6 +39,5 @@
         public User User { get; set; }
         public Poll? Poll { get; set; }
 
-
     }
 }

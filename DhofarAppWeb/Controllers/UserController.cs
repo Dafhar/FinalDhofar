@@ -40,40 +40,46 @@ namespace DhofarAppWeb.Controllers
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             var user = await _context.Register(registerDTO, this.ModelState);
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && user!=null)
             {
                 // If the registration was successful, return a JSON response indicating success
                 return Json(new { success = true });
             }
             else
             {
-
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                                .Select(e => e.ErrorMessage);
+                var errors = ModelState.Where(x => x.Value.Errors.Any())
+                                       .ToDictionary(x => x.Key, x => x.Value.Errors.Select(e => e.ErrorMessage).ToList());
                 return Json(new { success = false, errors = errors });
             }
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputDTO loginDto)
         {
-
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                               .Select(e => e.ErrorMessage);
-                return Json(new { success = false, errors = errors });
-            }
-
             var user = await _context.Login(loginDto, this.ModelState);
-            if (user != null)
+            if (ModelState.IsValid && user != null)
             {
                 return Json(new { success = true });
             }
-            return Json(new { success = false });
-            }
+            else
+            {
+                // Check if the login failed due to invalid credentials
+                if (user == null && ModelState.IsValid)
+                {
+                    // Add a specific error message for invalid login
+                    ModelState.AddModelError("InvalidLogin", "Invalid login.");
+                }
 
+                var errors = ModelState.Where(x => x.Value.Errors.Any())
+                                        .ToDictionary(x => x.Key, x => x.Value.Errors.Select(e => e.ErrorMessage).ToList());
+
+                return Json(new { success = false, errors = errors });
+            }
         }
+
+
+    }
 
 }

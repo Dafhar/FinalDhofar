@@ -28,7 +28,6 @@ namespace DhofarAppWeb.Data
 
         public DbSet<SubjectFiles> SubjectFiles { get; set; }
 
-
         public DbSet<RatingSubject> RatingSubjects { get; set; }
 
         public DbSet<CommentSubject> CommentSubjects { get; set; }
@@ -58,8 +57,8 @@ namespace DhofarAppWeb.Data
         public DbSet<Visitor> Visitors { get; set; }
 
         public DbSet<Colors> Colors { get; set; }
-        public DbSet<SubjectType> SubjectTypes { get; set; }
 
+        public DbSet<SubjectType> SubjectTypes { get; set; }
 
         public DbSet<OnBoardScreen> OnBoardScreens { get; set; }
 

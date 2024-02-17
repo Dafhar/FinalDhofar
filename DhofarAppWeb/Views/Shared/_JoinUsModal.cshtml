@@ -26,7 +26,7 @@
                                         الكامل
                                     </label>
                                     <input asp-for="Fullname" type="text" class="form-control input text-end"
-                                           id="fullName" placeholder="Salim ahmad">
+                                           id="FullName" placeholder="Salim ahmad">
                                     <span asp-validation-for="Fullname" class="text-danger"></span>
                                 </div>
                                 
@@ -89,9 +89,9 @@
                                         <div class="input-group">
                                             <input asp-for="Password" type="password"
                                                    class="form-control input"
-                                                   id="exampleInputPassword2" placeholder="*****">
+                                                   id="registerPassword" placeholder="*****">
                                             <span class="password-eye-btn" type="button"
-                                                  onclick="togglePassword('exampleInputPassword2')">
+                                                  onclick="togglePassword('registerPassword')">
                                                 <i id="eyeIcon2" class="fa-regular fa-eye"></i>
                                             </span>
                                             <span asp-validation-for="Password" class="text-danger"></span>
@@ -112,9 +112,9 @@
                                         <div class="input-group">
                                             <input asp-for="ConfirmPassword"  type="password"
                                                    class="form-control input"
-                                                   id="exampleInputPassword3" placeholder="*****">
+                                                   id="confirmRegisterPassword" placeholder="*****">
                                             <span class="password-eye-btn" type="button"
-                                                  onclick="togglePassword('exampleInputPassword3')">
+                                                  onclick="togglePassword('confirmRegisterPassword')">
                                                 <i id="eyeIcon3" class="fa-regular fa-eye"></i>
                                             </span>
                                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
@@ -128,11 +128,13 @@
                             </div>
 
                         </div>
-                        
+                        <div id="registrationErrors" class="text-danger mb-3"></div>
+
                             <button type="submit" class="btn login-form-button btn-sm px-3">
                                 تسجيل
                                 مستخدم جديد
                             </button>
+
                     </form>
                      <div class="modal-body">
                 hello
