@@ -24,9 +24,11 @@ namespace DhofarAppWeb.Data
 
         public DbSet<Subject> Subjects { get; set; }
 
-        public DbSet<GeneralSubjectsType> GeneralSubjectsTypes { get; set; }
+        public DbSet<SubjectType> SubjectTypes { get; set; }
 
         public DbSet<SubjectFiles> SubjectFiles { get; set; }
+
+        public DbSet<GeneralSubjectsType> GeneralSubjectsTypes { get; set; }
 
         public DbSet<RatingSubject> RatingSubjects { get; set; }
 
@@ -58,9 +60,9 @@ namespace DhofarAppWeb.Data
 
         public DbSet<Colors> Colors { get; set; }
 
-        public DbSet<SubjectType> SubjectTypes { get; set; }
-
         public DbSet<OnBoardScreen> OnBoardScreens { get; set; }
+
+        public DbSet<SubjectTypeSubject> SubjectTypeSubjects { get; set; }
 
 
 
@@ -87,7 +89,23 @@ namespace DhofarAppWeb.Data
                 .WithMany(u => u.FavoriteSubjects)
                 .HasForeignKey(fs => fs.UserId)
                 .IsRequired()  // Make UserId a required field
-                .OnDelete(DeleteBehavior.Restrict); // Specify NO ACTION
+                .OnDelete(DeleteBehavior.Restrict);// Specify NO ACTION
+
+            builder.Entity<SubjectTypeSubject>()
+             .HasKey(subTypeSub => new {
+                 subTypeSub.SubjectId,
+                 subTypeSub.SubjectTypeId
+             });
+
+            builder.Entity<SubjectTypeSubject>()
+                .HasOne(subTypeSub => subTypeSub.Subject)
+                .WithMany(sub => sub.SubjectTypeSubjects)
+                .HasForeignKey(subTypeSub => subTypeSub.SubjectId);
+
+            builder.Entity<SubjectTypeSubject>()
+                .HasOne(subTypeSub => subTypeSub.SubjectType)
+                .WithMany(subType => subType.SubjectTypeSubjects)
+                .HasForeignKey(subTypeSub => subTypeSub.SubjectTypeId);
 
             builder.Entity<FavoriteSubject>()
                 .HasOne(fs => fs.Subject)
@@ -216,29 +234,6 @@ namespace DhofarAppWeb.Data
             builder.Entity<UserColors>()
                .HasKey(uc => new { uc.UserId, uc.ColorsId });
 
-
-
-            builder.Entity<Subject>()
-            .HasMany(s => s.SubjectTypes)
-            .WithMany(st => st.Subjects)
-            .UsingEntity<Dictionary<string, object>>(
-                "SubjectSubjectType",
-                j => j
-                    .HasOne<SubjectType>()
-                    .WithMany()
-                    .HasForeignKey("SubjectTypeId"),
-                j => j
-                    .HasOne<Subject>()
-                    .WithMany()
-                    .HasForeignKey("SubjectId"),
-                j =>
-                {
-                    j.HasKey("SubjectId", "SubjectTypeId");
-                    j.ToTable("SubjectSubjectTypes");
-                });
-
-
-
             builder.Entity<Colors>().HasData(
                 new Colors { Id = 1, HexColor = "#FF0000" },
                 new Colors { Id = 2, HexColor = "#FFA500" },
@@ -264,13 +259,22 @@ namespace DhofarAppWeb.Data
                 // Add more subcategories as needed
             );
 
-            builder.Entity<GeneralSubjectsType>().HasData(
-                new GeneralSubjectsType { Id = 1, /*Title = "Type 1",*/ Name_Ar = "النوع 1", Name_En = "Type 1" },
-                new GeneralSubjectsType { Id = 2, /*Title = "Type 2",*/ Name_Ar = "النوع 2", Name_En = "Type 2" }
+            builder.Entity<SubjectType>().HasData(
+                new SubjectType { Id = 1, Name_Ar = "نقطة نقاش", Name_En = "suggest" },
+                new SubjectType { Id = 2, Name_Ar = "افكار مبتكرة", Name_En = "Ideas" }
                 // Add more subject types as needed
             );
+            builder.Entity<GeneralSubjectsType>().HasData(
+             new GeneralSubjectsType { Id = 1, Title = "عام", Name_Ar = "الأفكار والمقترحات العامة", Name_En = "General ideas and suggestions" },
+             new GeneralSubjectsType { Id = 2, Title = "عام", Name_Ar = "تطوير الخدمات الالكترونية", Name_En = "Development of electronic services" },
+             new GeneralSubjectsType { Id = 3, Title = "عام", Name_Ar = "حلول وأفكار تصريف مياه الأمطار", Name_En = "Solutions and ideas for rainwater drainage" },
+             new GeneralSubjectsType { Id = 4, Title = "عام", Name_Ar = "تطوير السوق المركزي", Name_En = "Development of the central market" },
+             new GeneralSubjectsType { Id = 5, Title = "خاص", Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤", Name_En = "Proposal for Dhofar Fall 2024 events" }
+         // Add more subject types as needed
+         );
 
-           
+
+
 
             builder.Entity<OnBoardScreen>()
                 .HasData(

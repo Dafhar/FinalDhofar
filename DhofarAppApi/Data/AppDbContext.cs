@@ -244,8 +244,8 @@ namespace DhofarAppApi.Data
             );
 
             builder.Entity<SubjectType>().HasData(
-                new SubjectType { Id = 1, TitleValue = "Type 1", Name_Ar = "النوع 1", Name_En = "Type 1" },
-                new SubjectType { Id = 2, TitleValue = "Type 2", Name_Ar = "النوع 2", Name_En = "Type 2" }
+                new SubjectType { Id = 1, TitleValue = "Suggest", Name_Ar ="إقتراحات", Name_En = "Suggests" },
+                new SubjectType { Id = 2, TitleValue = "Idea", Name_Ar = "أفكار", Name_En = "Ideas" }
                 // Add more subject types as needed
             );
 

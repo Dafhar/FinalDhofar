@@ -30,12 +30,12 @@
 
 
                         </div>
-                        <div class="row">
-                            <div class="col-6">
+                            <div class="mb-3">
                                 <label asp-for="Password" class="form-label navy">
                                     كلمة
                                     المرور
                                 </label>
+
                                 <div class="input-group">
                                     <div class="input-group">
                                         <input asp-for="Password" type="password"
@@ -47,9 +47,10 @@
                                         </span>
                                         <span asp-validation-for="Password" class="text-danger"></span>
 
+
                                     </div>
 
-                                </div>
+
 
 
 
@@ -58,18 +59,20 @@
                         
 
                         <div class="d-flex justify-content-between mb-3">
+
                             <input type="submit" class="btn login-form-button btn-sm px-4" value="تسجيل الدخول" />
-                                
+
+                            <button class="btn login-form-button btn-sm px-3" id="registerFormShow"
+                                    data-bs-target="#exampleModalToggle2"
+                                    data-bs-toggle="modal">
+                                تسجيل مستخدم جديد
+                            </button>
                           
                         </div>
                         <div id="loginErrors" class="text-danger mb-3"></div>
-
+                       
                     </form>
-                    <button class="btn login-form-button btn-sm px-3"
-                            data-bs-target="#exampleModalToggle2"
-                            data-bs-toggle="modal">
-                        تسجيل مستخدم جديد
-                    </button>
+                    
                     <a href="#" class="navy mt-2" data-bs-target="#exampleModalToggle4"
                        data-bs-toggle="modal">نسيت كلمة المرور</a>
                 </div>

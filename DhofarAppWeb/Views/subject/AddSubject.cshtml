@@ -1,6 +1,12 @@
-﻿@{
+﻿@model DhofarAppWeb.Dtos.Subject.PostSubjectDTO
+@using System.Security.Claims
+
+@{
     ViewData["Title"] = "Add Subject Page";
     Layout = "~/views/Shared/_Layout.cshtml";
+    //var user = HttpContext.User;
+
+    //var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 }
 
 <!DOCTYPE html>
@@ -18,102 +24,100 @@
 
         <div class="row d-flex justify-content-between mt-4 mb-3">
             <div class="px-3">
-                <div class="row mt-sm-4">
-                    <div class="col-12 col-md-7">
-                        <div class="row">
-                            <div class="col-lg-6 mb-3">
-                                <div class=" mt-sm-4">
-                                    <label class="navy mb-2">المحور الأساسي</label>
-                                    <input class="edit-profile-box form-control"
-                                           placeholder="الأفكار والمقترحات العامة">
+                <form asp-action="AddSubject" asp-controller="subject" method="post">
+                    <div class="row mt-sm-4">
+                        <div class="col-12 col-md-7">
+                            <div class="row">
+                                <input type="hidden" asp-for="UserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+                                <input type="hidden" asp-for="GeneralSubjectsTypesId" value="@Model.GeneralSubjectsTypesId" />
+                                    
+                                    
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label asp-for="PrimarySubject" class="navy mb-2">المحور الأساسي</label>
+                                        <input asp-for="PrimarySubject"
+                                            class="edit-profile-box form-control"
+                                               placeholder="الأفكار والمقترحات العامة">
+                                    </div>
+                                    <span asp-validation-for="PrimarySubject" class="text-danger"></span>
+                                </div>
+                                
+                                <div class="col-lg-6 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label asp-for="SubjectTypeId" class="navy mb-2">نوع الموضوع</label>
+                                        <div class="dropdown d-flex align-items-center">
+                                            <select asp-for="SubjectTypeId" class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
+                                                    aria-label="Multi Select project" id="selectLocation" required asp-items="ViewBag.SubjectTypes">
+                                                <option selected value="">اختر نوع</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-fill mt-sm-4 mb-3">
+                                <label asp-for="Title" class="navy mb-2">عنوان الموضوع</label>
+                                <input asp-for="Title" class="edit-profile-box form-control" placeholder="إعادة تأهيل الحدائق العامة">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <div class=" mt-sm-4">
+                                        <label asp-for="Description" class="navy mb-2">تفاصيل الموضوع</label>
+                                        <input asp-for="Description"  id="description" cols="30" rows="10" dir="rtl"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       @*  <div class="col-12 col-md-5">
+                            <div class="flex-fill mt-sm-4 mb-3">
+                                <label class="navy mb-2">المرفقات</label>
+                                <div class="file-upload-container rounded-3">
+                                    <label for="fileInput" class="file-label mb-4">
+                                        <input type="file" id="fileInput"
+                                               accept="image/png, image/jpeg, image/gif, application/pdf" multiple />
+                                        <span class="file-content">
+                                            <img src=@Url.Content("~/images/inbox-icon.svg") />
+                                            <span class="upload-text">Upload</span>
+                                        </span>
+                                    </label>
+                                    <div id="preview" class="image-preview"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 mb-3">
-                                <div class=" mt-sm-4">
-                                    <label class="navy mb-2">نوع الموضوع</label>
-                                    <div class="dropdown d-flex align-items-center">
-                                        <select class="form-select col-12 d-flex justify-content-between side-dropdown rounded-3 rtl-dropdown px-3"
-                                                aria-label="Multi Select project" id="selectLocation" required>
-                                            <option disabled selected value="">صلالة</option>
-                                            <option value="Thumrait">ثمريت</option>
-                                            <option value="Taqah">طاقة</option>
-                                            <option value="Marbat">مرباط</option>
-                                            <option value="Rakhyout">رخيوت</option>
-                                            <option value="Dalkout">ضلكوت</option>
-                                            <option value="Sadah">سدح</option>
-                                            <option value="Shalim and Jazirat Al Hallaniyat">
-                                                شليم وجزر الحلانيات
-                                            </option>
-                                            <option value="Mughsayn">مقشن</option>
-                                            <option value="Al Mazyuna">المزيونة</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        </div> *@
+                        <div class="m-0">
+                            <button type="submit" class="btn btn-sm login-button col-12 col-md-2" data-bs-target="#exampleModalToggle6"
+                                    data-bs-toggle="modal">
+                                إرسال
+                            </button>
                         </div>
-                        <div class="flex-fill mt-sm-4 mb-3">
-                            <label class="navy mb-2">عنوان الموضوع</label>
-                            <input class="edit-profile-box form-control" placeholder="إعادة تأهيل الحدائق العامة">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 mb-3">
-                                <div class=" mt-sm-4">
-                                    <label class="navy mb-2">تفاصيل الموضوع</label>
-                                    <textarea name="content" id="" cols="30" rows="10" dir="rtl"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5">
-                        <div class="flex-fill mt-sm-4 mb-3">
-                            <label class="navy mb-2">المرفقات</label>
-                            <div class="file-upload-container rounded-3">
-                                <label for="fileInput" class="file-label mb-4">
-                                    <input type="file" id="fileInput"
-                                           accept="image/png, image/jpeg, image/gif, application/pdf" multiple />
-                                    <span class="file-content">
-                                        <img src=@Url.Content("~/images/inbox-icon.svg")/>
-                                        <span class="upload-text">Upload</span>
-                                    </span>
-                                </label>
-                                <div id="preview" class="image-preview"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="m-0">
-                        <button class="btn btn-sm login-button col-12 col-md-2" data-bs-target="#exampleModalToggle6"
-                                data-bs-toggle="modal">
-                            إرسال
-                        </button>
-                    </div>
-                    <div class="modal fade" id="exampleModalToggle6" aria-hidden="true"
-                         aria-labelledby="exampleModalToggleLabel6" tabindex="-1">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                            <div class="modal-content">
-                                <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                <div class="row">
-                                    <div class="col-lg-6 modal-login d-flex justify-content-center align-items-center flex-column">
-                                        <img src=@Url.Content("~/images/check-circle.svg")>
-                                        <h1 class="modal-title fs-3 navy mt-4 text-center" id="exampleModalToggleLabel">
-                                            تم إرسال الشكوى بنجاح!
-                                        </h1>
-                                        <button class="btn btn-sm login-button px-4 mt-2" onclick="goToHome()">
-                                            الصفحة
-                                            الرئيسية
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-6 d-flex justify-content-end">
-                                        <img src=@Url.Content("~/images/login-img.png") class="login-img d-none d-lg-flex"
-                                             alt="Login Image"/>
+                        <div class="modal fade" id="exampleModalToggle6" aria-hidden="true"
+                             aria-labelledby="exampleModalToggleLabel6" tabindex="-1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close p-3" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    <div class="row">
+                                        <div class="col-lg-6 modal-login d-flex justify-content-center align-items-center flex-column">
+                                            <img src=@Url.Content("~/images/check-circle.svg")>
+                                            <h1 class="modal-title fs-3 navy mt-4 text-center" id="exampleModalToggleLabel">
+                                                تم إرسال الشكوى بنجاح!
+                                            </h1>
+                                            <button class="btn btn-sm login-button px-4 mt-2" onclick="goToHome()">
+                                                الصفحة
+                                                الرئيسية
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            <img src=@Url.Content("~/images/login-img.png") class="login-img d-none d-lg-flex"
+                                                 alt="Login Image" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+              
             </div>
         </div>
     </div>
