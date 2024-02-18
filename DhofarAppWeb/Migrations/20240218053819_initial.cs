@@ -127,6 +127,7 @@ namespace DhofarAppWeb.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -169,9 +170,8 @@ namespace DhofarAppWeb.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    Title_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name_Ar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name_En = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -606,7 +606,7 @@ namespace DhofarAppWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubjectSubjectTypes",
+                name: "SubjectTypeSubject",
                 columns: table => new
                 {
                     SubjectId = table.Column<int>(type: "int", nullable: false),
@@ -614,15 +614,15 @@ namespace DhofarAppWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubjectSubjectTypes", x => new { x.SubjectId, x.SubjectTypeId });
+                    table.PrimaryKey("PK_SubjectTypeSubject", x => new { x.SubjectId, x.SubjectTypeId });
                     table.ForeignKey(
-                        name: "FK_SubjectSubjectTypes_SubjectTypes_SubjectTypeId",
+                        name: "FK_SubjectTypeSubject_SubjectTypes_SubjectTypeId",
                         column: x => x.SubjectTypeId,
                         principalTable: "SubjectTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SubjectSubjectTypes_Subjects_SubjectId",
+                        name: "FK_SubjectTypeSubject_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
@@ -981,11 +981,14 @@ namespace DhofarAppWeb.Migrations
 
             migrationBuilder.InsertData(
                 table: "GeneralSubjectsTypes",
-                columns: new[] { "Id", "Name_Ar", "Name_En" },
+                columns: new[] { "Id", "Name_Ar", "Name_En", "Title" },
                 values: new object[,]
                 {
-                    { 1, "النوع 1", "Type 1" },
-                    { 2, "النوع 2", "Type 2" }
+                    { 1, "الأفكار والمقترحات العامة", "General ideas and suggestions", "عام" },
+                    { 2, "تطوير الخدمات الالكترونية", "Development of electronic services", "عام" },
+                    { 3, "حلول وأفكار تصريف مياه الأمطار", "Solutions and ideas for rainwater drainage", "عام" },
+                    { 4, "تطوير السوق المركزي", "Development of the central market", "عام" },
+                    { 5, "مقترح لفعاليات خريف ظفار ٢٠٢٤", "Proposal for Dhofar Fall 2024 events", "خاص" }
                 });
 
             migrationBuilder.InsertData(
@@ -995,6 +998,15 @@ namespace DhofarAppWeb.Migrations
                 {
                     { 1, "يتيح تطبيق ضع بصمتك التابع لبلدية ظفار وسيلة فعّالة لمشاركة الأفكار بين المواطنين والسلطات المحلية بسهولة. مما يسهم في خلق بيئة تشجع ", ".uploads/b8f808a9-5cb4-43c9-a294-3d8abfefa36f_onboard_1 (1).png", "شاركنا أفكارك" },
                     { 2, "قم بالإبلاغ عن المشكلات وحلها بكفاءة من خلال تقديم طلب في التطبيق واستمتع بتجربة سلسة في التعبير عن مخاوفك. ويمكنك تتبع طلبك بسهولة عن بعد.", "uploads/a3cfa779-1119-47f3-b801-5084b664a3e2_onboard_2.png", "قدم شكوى أو بلاغ" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubjectTypes",
+                columns: new[] { "Id", "Name_Ar", "Name_En" },
+                values: new object[,]
+                {
+                    { 1, "نقطة نقاش", "suggest" },
+                    { 2, "افكار مبتكرة", "Ideas" }
                 });
 
             migrationBuilder.InsertData(
@@ -1142,8 +1154,8 @@ namespace DhofarAppWeb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubjectSubjectTypes_SubjectTypeId",
-                table: "SubjectSubjectTypes",
+                name: "IX_SubjectTypeSubject_SubjectTypeId",
+                table: "SubjectTypeSubject",
                 column: "SubjectTypeId");
 
             migrationBuilder.CreateIndex(
@@ -1229,7 +1241,7 @@ namespace DhofarAppWeb.Migrations
                 name: "SubjectFiles");
 
             migrationBuilder.DropTable(
-                name: "SubjectSubjectTypes");
+                name: "SubjectTypeSubject");
 
             migrationBuilder.DropTable(
                 name: "UserColors");

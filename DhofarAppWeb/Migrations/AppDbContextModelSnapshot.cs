@@ -1542,6 +1542,10 @@ namespace DhofarAppWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("GeneralSubjectsTypes");
@@ -1550,14 +1554,37 @@ namespace DhofarAppWeb.Migrations
                         new
                         {
                             Id = 1,
-                            Name_Ar = "النوع 1",
-                            Name_En = "Type 1"
+                            Name_Ar = "الأفكار والمقترحات العامة",
+                            Name_En = "General ideas and suggestions",
+                            Title = "عام"
                         },
                         new
                         {
                             Id = 2,
-                            Name_Ar = "النوع 2",
-                            Name_En = "Type 2"
+                            Name_Ar = "تطوير الخدمات الالكترونية",
+                            Name_En = "Development of electronic services",
+                            Title = "عام"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name_Ar = "حلول وأفكار تصريف مياه الأمطار",
+                            Name_En = "Solutions and ideas for rainwater drainage",
+                            Title = "عام"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name_Ar = "تطوير السوق المركزي",
+                            Name_En = "Development of the central market",
+                            Title = "عام"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤",
+                            Name_En = "Proposal for Dhofar Fall 2024 events",
+                            Title = "خاص"
                         });
                 });
 
@@ -1815,17 +1842,46 @@ namespace DhofarAppWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Title_Ar")
+                    b.Property<string>("Name_Ar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title_En")
+                    b.Property<string>("Name_En")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("SubjectTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name_Ar = "نقطة نقاش",
+                            Name_En = "suggest"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name_Ar = "افكار مبتكرة",
+                            Name_En = "Ideas"
+                        });
+                });
+
+            modelBuilder.Entity("DhofarAppWeb.Model.SubjectTypeSubject", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubjectId", "SubjectTypeId");
+
+                    b.HasIndex("SubjectTypeId");
+
+                    b.ToTable("SubjectTypeSubjects");
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.User", b =>
@@ -2191,21 +2247,6 @@ namespace DhofarAppWeb.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SubjectSubjectType", b =>
-                {
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SubjectId", "SubjectTypeId");
-
-                    b.HasIndex("SubjectTypeId");
-
-                    b.ToTable("SubjectSubjectTypes", (string)null);
-                });
-
             modelBuilder.Entity("DhofarAppWeb.Model.CommentReplies", b =>
                 {
                     b.HasOne("DhofarAppWeb.Model.CommentSubject", "CommentSubject")
@@ -2413,6 +2454,25 @@ namespace DhofarAppWeb.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("DhofarAppWeb.Model.SubjectTypeSubject", b =>
+                {
+                    b.HasOne("DhofarAppWeb.Model.Subject", "Subject")
+                        .WithMany("SubjectTypeSubjects")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DhofarAppWeb.Model.SubjectType", "SubjectType")
+                        .WithMany("SubjectTypeSubjects")
+                        .HasForeignKey("SubjectTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("SubjectType");
+                });
+
             modelBuilder.Entity("DhofarAppWeb.Model.UserColors", b =>
                 {
                     b.HasOne("DhofarAppWeb.Model.Colors", "Colors")
@@ -2529,21 +2589,6 @@ namespace DhofarAppWeb.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SubjectSubjectType", b =>
-                {
-                    b.HasOne("DhofarAppWeb.Model.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DhofarAppWeb.Model.SubjectType", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DhofarAppWeb.Model.Category", b =>
                 {
                     b.Navigation("Complaints");
@@ -2598,6 +2643,13 @@ namespace DhofarAppWeb.Migrations
                     b.Navigation("Poll");
 
                     b.Navigation("RatingSubjects");
+
+                    b.Navigation("SubjectTypeSubjects");
+                });
+
+            modelBuilder.Entity("DhofarAppWeb.Model.SubjectType", b =>
+                {
+                    b.Navigation("SubjectTypeSubjects");
                 });
 
             modelBuilder.Entity("DhofarAppWeb.Model.User", b =>

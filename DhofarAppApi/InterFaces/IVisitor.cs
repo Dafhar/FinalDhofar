@@ -9,5 +9,6 @@ namespace DhofarAppApi.InterFaces
         Task<int> CountVisitors();
 
         Task<(List<object>, int)> GetVisitorStatistics();
+
     }
 }
