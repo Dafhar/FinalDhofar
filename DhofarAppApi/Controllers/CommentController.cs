@@ -31,7 +31,7 @@ namespace DhofarAppApi.Controllers
         }
 
         [HttpGet("{subjectId}")]
-        public async Task<ActionResult<IEnumerable<GetSubjectCommentDTO>>> GetSubjectComments(int subjectId)
+        public async Task<ActionResult<IEnumerable<GetAllCommentsForSubjectDTO>>> GetSubjectComments(int subjectId)
         {
             var comments = await _context.GetAllCommentForSubjectId(subjectId);
 

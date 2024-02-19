@@ -4,13 +4,12 @@
     {
         public int Id { get; set; }
 
-        public string TitleValue { get; set; }
+        public required string Name_Ar { get; set; }
 
-        public string Name_Ar { get; set; }
-        public string Name_En { get; set; }
+        public required string Name_En { get; set; }
 
-        public List<Subject> Subjects { get; set; }
+        public List<SubjectTypeSubject> SubjectTypeSubjects { get; set; }
 
-       
+
     }
 }

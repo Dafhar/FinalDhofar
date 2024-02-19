@@ -1,4 +1,5 @@
 ﻿using DhofarAppApi.Dtos.ReplyComment;
+using DhofarAppApi.Model;
 
 namespace DhofarAppApi.Dtos.Comment
 {
@@ -16,8 +17,13 @@ namespace DhofarAppApi.Dtos.Comment
         public int UpVoteCounter { get; set; }
 
         public int DownVoteCounter { get; set; }
+
         public string File { get; set; }
 
+        public string UserImageUrl { get; set; }
+
         public List<GetReplyCommentDTO> ReplyComments { get; set; }
+
+        public List<DhofarAppApi.Model.User> Users { get; set; }
     }
 }

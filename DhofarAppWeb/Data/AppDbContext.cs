@@ -265,11 +265,11 @@ namespace DhofarAppWeb.Data
                 // Add more subject types as needed
             );
             builder.Entity<GeneralSubjectsType>().HasData(
-             new GeneralSubjectsType { Id = 1, Title = "عام", Name_Ar = "الأفكار والمقترحات العامة", Name_En = "General ideas and suggestions" },
-             new GeneralSubjectsType { Id = 2, Title = "عام", Name_Ar = "تطوير الخدمات الالكترونية", Name_En = "Development of electronic services" },
-             new GeneralSubjectsType { Id = 3, Title = "عام", Name_Ar = "حلول وأفكار تصريف مياه الأمطار", Name_En = "Solutions and ideas for rainwater drainage" },
-             new GeneralSubjectsType { Id = 4, Title = "عام", Name_Ar = "تطوير السوق المركزي", Name_En = "Development of the central market" },
-             new GeneralSubjectsType { Id = 5, Title = "خاص", Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤", Name_En = "Proposal for Dhofar Fall 2024 events" }
+             new GeneralSubjectsType { Id = 1, Title_En = "Public", Title_Ar = "عام", Name_Ar = "الأفكار والمقترحات العامة", Name_En = "General ideas and suggestions" },
+             new GeneralSubjectsType { Id = 2, Title_En = "Public", Title_Ar = "عام", Name_Ar = "تطوير الخدمات الالكترونية", Name_En = "Development of electronic services" },
+             new GeneralSubjectsType { Id = 3, Title_En = "Public", Title_Ar = "عام", Name_Ar = "حلول وأفكار تصريف مياه الأمطار", Name_En = "Solutions and ideas for rainwater drainage" },
+             new GeneralSubjectsType { Id = 4, Title_En = "Public", Title_Ar = "عام", Name_Ar = "تطوير السوق المركزي", Name_En = "Development of the central market" },
+             new GeneralSubjectsType { Id = 5, Title_En = "Private", Title_Ar = "خاص", Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤", Name_En = "Proposal for Dhofar Fall 2024 events" }
          // Add more subject types as needed
          );
 

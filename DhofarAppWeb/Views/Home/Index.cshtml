@@ -81,13 +81,7 @@
                         }
 
                     </div>
-                    <div class="d-flex align-items-center  subject-number">
-                        <img src="~/images/subject-icon.svg" />
-                        <p class="navy m-0">
-                            <span class="navy">@item.Subjects.Count</span>
-                            موضوع
-                        </p>
-                    </div>
+                   
                 </div>
             }
 
@@ -202,7 +196,10 @@
                             <div class="">
                                 @if(item.ImageURL != null)
                                 {
-                                    <img src=@item.ImageURL class="subject-user-img user-circle">
+                                    <img 
+                                        src="@item.ImageURL"
+                                        
+                                    class="subject-user-img user-circle">
                                 }
                                 else
                                 {

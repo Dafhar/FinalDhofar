@@ -360,7 +360,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 .subject-user-img {
     width: 100%;
-    height: auto;
     display: block;
     border-radius: 50%; /* Maintain circular shape */
 }

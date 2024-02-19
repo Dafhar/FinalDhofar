@@ -4,9 +4,12 @@ namespace DhofarAppApi.Dtos.Complaint
 {
     public class ComplaintDTO
     {
+        public int Id { get; set; }
+
         public string State { get; set; }
         public int DepartmentTypeId { get; set; }
         public int CategoryID { get; set; }
+        public int? SubCategoryId { get; set; }
   
         public string Title { get; set; }
         public string UserName { get; set; }
@@ -17,4 +20,6 @@ namespace DhofarAppApi.Dtos.Complaint
         public DateTime Time { get; set; }
         public List<GetComplaintFilesDTO> Files { get; set; }
     }
+
+   
 }

@@ -24,6 +24,8 @@ namespace DhofarAppApi.Model
         public bool IsAccepted { get; set; } = false;
         public bool MySpecialist { get; set; } = true;
 
+        public string? AdminNotes { get; set; }
+
         public DateTime Time { get; set; }
 
         public List<ComplaintsFile>? Files { get; set; } 
@@ -33,7 +35,9 @@ namespace DhofarAppApi.Model
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
 
-       public Category? Category { get; set; }
+        public int? subccategory { get; set; }
+
+        public Category? Category { get; set; }
 
         public DepartmentType DepartmentType { get; set; }
 

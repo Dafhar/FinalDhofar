@@ -7,10 +7,9 @@ namespace DhofarAppApi.Dtos.Subject
     {
         public required string PrimarySubject { get; set; }
 
-        public int SubjectTypeId { get; set; }
+        public List<int> SubjectTypeId { get; set; }
 
         public required string Title { get; set; }
-
 
         public required string Description { get; set; }
         public string? PollQuestion { get; set; }

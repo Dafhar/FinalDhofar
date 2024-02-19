@@ -90,19 +90,6 @@ namespace DhofarAppApi.Controllers
             }
 
         }
-        [HttpGet("profile")]
-        public async Task<IActionResult> GetUserProfile()
-        {
-            var user = await _users.GetPersonalProfile();
-            if (user == null)
-            {
-                var errorResponse = new { errors = new { message = "Not found" } };
-                return BadRequest(errorResponse);
-
-            }
-
-            return Ok(user);
-        }
 
         [HttpPost("SendEmail")]
         public async Task<IActionResult> SendEmail([FromForm] string recipientEmail, [FromForm] string subject, [FromForm] string htmlContent)
@@ -124,6 +111,7 @@ namespace DhofarAppApi.Controllers
             var colors = await _users.GetAllColors();
             return Ok(colors);
         }
+
         [HttpGet("personal-profile")]
         public async Task<ActionResult<GetPersonalProfileDTO>> GetPersonalProfile()
         {
@@ -134,6 +122,7 @@ namespace DhofarAppApi.Controllers
             }
             return personalProfile;
         }
+
         [HttpGet("VisitorProfile/{userId}")]
         public async Task<IActionResult> GetUserProfilePublic(string userId)
         {
@@ -146,6 +135,13 @@ namespace DhofarAppApi.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("GetTopActiveUsers")]
+        public async Task<IActionResult> GetTopFiveActiveUsers()
+        {
+            var users = await _users.GetTopActiveUsers();
+            return Ok(users);
         }
     }
 }

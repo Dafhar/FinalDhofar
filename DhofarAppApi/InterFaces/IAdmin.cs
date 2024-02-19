@@ -44,12 +44,11 @@ namespace DhofarAppApi.InterFaces
 
 
         public Task<List<GetAllComplaintAdmin>> GetAllComplaint();
-        public Task<List<GetComplaintDTO>> GetAllUserComplaint(string userId);
+        public Task<List<GetComplaintDTO>> GetAllUserComplaint();
         public Task<string> DeleteComplaint(int Id, string why);
         public Task<EditComplaintStatus> EditComplaintStatus(int Id, EditComplaintStatus ST);
         public Task<AcceptedComplaint> AcceptedComplaint(int Id, AcceptedComplaint ST);
         public Task<List<ComplaintDTO>> GetComplaintByDate(DateTime From, DateTime To);
-        public Task<List<GetComplaintDTO>> GetMyComplaints(string userId);
         public Task<GetComplaintDTO> GetComplaintById(int Id);
         public Task<List<(GetComplaintDTO, int)>> ComplaintClosedinDpartment(int Id);
         public Task<int> AllClosedComplaint();

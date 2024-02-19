@@ -6,7 +6,7 @@ namespace DhofarAppApi.Dtos.Subject
     {
         public int Id { get; set; }
 
-        public string? SubjectTypeName { get; set; }
+        public List<string>? SubjectType_Name { get; set; }
 
         public string? ImageUrl { get; set; }
 

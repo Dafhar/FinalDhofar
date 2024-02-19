@@ -6,7 +6,7 @@
 
         public string UserId { get; set; }
 
-        public int SubjectTypeId { get; set; }
+        public int GeneralSubjectsTypesId { get; set; }
 
         public string PrimarySubject { get; set; }
 
@@ -22,6 +22,8 @@
 
         public DateTime CreatedTime { get; set; }
 
+        //public int SubjectTypeId { get; set; }  
+
         // Navigations 
 
         public List<SubjectFiles>? Files { get; set; }
@@ -32,7 +34,9 @@
 
         public List<FavoriteSubject>? FavoriteSubjects { get; set; }
 
-        public SubjectType SubjectType { get; set; }
+        public GeneralSubjectsType GeneralSubjectsTypes { get; set; }
+
+        public List<SubjectTypeSubject> SubjectTypeSubjects { get; set; }
 
         public User User { get; set; }
         public Poll? Poll { get; set; }

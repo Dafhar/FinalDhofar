@@ -29,6 +29,7 @@ namespace DhofarAppApi.Data
 
         public DbSet<SubjectFiles> SubjectFiles { get; set; }
 
+        public DbSet<GeneralSubjectsType> GeneralSubjectsTypes { get; set; }
 
         public DbSet<RatingSubject> RatingSubjects { get; set; }
 
@@ -59,10 +60,10 @@ namespace DhofarAppApi.Data
         public DbSet<Visitor> Visitors { get; set; }
 
         public DbSet<Colors> Colors { get; set; }
-        public DbSet<MainTopic> MainTopices { get; set; }
-
 
         public DbSet<OnBoardScreen> OnBoardScreens { get; set; }
+
+        public DbSet<SubjectTypeSubject> SubjectTypeSubjects { get; set; }
 
 
 
@@ -89,7 +90,23 @@ namespace DhofarAppApi.Data
                 .WithMany(u => u.FavoriteSubjects)
                 .HasForeignKey(fs => fs.UserId)
                 .IsRequired()  // Make UserId a required field
-                .OnDelete(DeleteBehavior.Restrict); // Specify NO ACTION
+                .OnDelete(DeleteBehavior.Restrict);// Specify NO ACTION
+
+            builder.Entity<SubjectTypeSubject>()
+             .HasKey(subTypeSub => new {
+                 subTypeSub.SubjectId,
+                 subTypeSub.SubjectTypeId
+             });
+
+            builder.Entity<SubjectTypeSubject>()
+                .HasOne(subTypeSub => subTypeSub.Subject)
+                .WithMany(sub => sub.SubjectTypeSubjects)
+                .HasForeignKey(subTypeSub => subTypeSub.SubjectId);
+
+            builder.Entity<SubjectTypeSubject>()
+                .HasOne(subTypeSub => subTypeSub.SubjectType)
+                .WithMany(subType => subType.SubjectTypeSubjects)
+                .HasForeignKey(subTypeSub => subTypeSub.SubjectTypeId);
 
             builder.Entity<FavoriteSubject>()
                 .HasOne(fs => fs.Subject)
@@ -244,12 +261,21 @@ namespace DhofarAppApi.Data
             );
 
             builder.Entity<SubjectType>().HasData(
-                new SubjectType { Id = 1, TitleValue = "Suggest", Name_Ar ="إقتراحات", Name_En = "Suggests" },
-                new SubjectType { Id = 2, TitleValue = "Idea", Name_Ar = "أفكار", Name_En = "Ideas" }
+                new SubjectType { Id = 1, Name_Ar = "نقطة نقاش", Name_En = "suggest" },
+                new SubjectType { Id = 2, Name_Ar = "افكار مبتكرة", Name_En = "Ideas" }
                 // Add more subject types as needed
             );
+            builder.Entity<GeneralSubjectsType>().HasData(
+             new GeneralSubjectsType { Id = 1, Title_En = "Public", Title_Ar = "عام", Name_Ar = "الأفكار والمقترحات العامة", Name_En = "General ideas and suggestions" },
+             new GeneralSubjectsType { Id = 2, Title_En = "Public", Title_Ar = "عام", Name_Ar = "تطوير الخدمات الالكترونية", Name_En = "Development of electronic services" },
+             new GeneralSubjectsType { Id = 3, Title_En = "Public", Title_Ar = "عام", Name_Ar = "حلول وأفكار تصريف مياه الأمطار", Name_En = "Solutions and ideas for rainwater drainage" },
+             new GeneralSubjectsType { Id = 4, Title_En = "Public", Title_Ar = "عام", Name_Ar = "تطوير السوق المركزي", Name_En = "Development of the central market" },
+             new GeneralSubjectsType { Id = 5, Title_En = "Private", Title_Ar = "خاص", Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤", Name_En = "Proposal for Dhofar Fall 2024 events" }
+         // Add more subject types as needed
+         );
 
-           
+
+
 
             builder.Entity<OnBoardScreen>()
                 .HasData(

@@ -4,6 +4,7 @@ using DhofarAppApi.Dtos.ReplyComment;
 using DhofarAppApi.InterFaces;
 using DhofarAppApi.Model;
 using FirebaseAdmin.Messaging;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Mail;
@@ -20,12 +21,17 @@ namespace DhofarAppApi.Services
         private readonly INotification _notification;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JWTTokenServices _jWTTokenService;
-        public CommentSubjectServices(AppDbContext db, INotification notification, IHttpContextAccessor httpContextAccessor, JWTTokenServices jWTTokenServices)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public CommentSubjectServices(AppDbContext db, INotification notification, IHttpContextAccessor httpContextAccessor, JWTTokenServices jWTTokenServices,UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _db = db;
             _notification = notification;
             _httpContextAccessor = httpContextAccessor;
             _jWTTokenService = jWTTokenServices;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<GetSubjectCommentDTO> CreateCommentSubject(PostCommentDTO postComment, int subjectId)
@@ -75,42 +81,57 @@ namespace DhofarAppApi.Services
            
         }
 
-        public async Task<List<GetSubjectCommentDTO>> GetAllCommentForSubjectId(int subjectId)
+        public async Task<List<GetAllCommentsForSubjectDTO>> GetAllCommentForSubjectId(int subjectId)
         {
-            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
-            var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
-
-            var user = await _db.Users.FindAsync(userId);
-
             var commentSubjects = await _db.CommentSubjects
                 .Where(cs => cs.SubjectId == subjectId)
-                .Select(cs => new GetSubjectCommentDTO
+                .Select(cs => new GetAllCommentsForSubjectDTO
                 {
-                   UserName=user.UserName,
+                    Id = cs.Id,
+                    FullName = cs.User.FullName,
                     Comment = cs.Comment,
-                    CommentTime = cs.CommentTime,
                     UpVoteCounter = cs.UpVoteCounter,
                     DownVoteCounter = cs.DownVoteCounter,
                     File = cs.File,
+                    RepliesCounter = cs.CommentReplies.Count,
+                    SubjectId = cs.SubjectId,
+                    Role = GetUser(cs.UserId, _userManager), // Pass _userManager as a parameter
+                    UserImageUrl = cs.User.ImageURL,
                     ReplyComments = cs.CommentReplies
-                    .Where(cr => cr.CommentSubjectId == cs.Id)
-                    .Select(cr => new GetReplyCommentDTO
-                    {
-                      
-                        UserName=user.UserName,
-                        Id = cr.Id,
-                        CommentSubjectId = cr.CommentSubjectId,
-                        ReplyComment = cr.ReplyComment
-                    }) // check if the commentSubject is the same of the all replies id 
-                    .ToList()
+                        .Where(cr => cr.CommentSubjectId == cs.Id)
+                        .Select(cr => new GetAllReplyCommentDTO
+                        {
+                            Id = cr.Id,
+                            FullName = cr.User.FullName,
+                            UserImageUrl = cr.User.ImageURL,
+                            CommentSubjectId = cr.CommentSubjectId,
+                            ReplyComment = cr.ReplyComment,
+                            file = cr.File,
+                            Role = GetUser(cr.UserId, _userManager), // Pass _userManager as a parameter
+                        }) // check if the commentSubject is the same of the all replies id 
+                        .ToList()
                 })
                 .OrderByDescending(cuv => cuv.UpVoteCounter)
                 .ThenBy(cdv => cdv.DownVoteCounter) // Secondary ordering by DownVoteCounter
                 .ToListAsync();
+
             return commentSubjects;
         }
 
+
+        public static string GetUser(string userId, UserManager<User> userManager)
+        {
+            var user = userManager.FindByIdAsync(userId).Result;
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                IList<string> roles = userManager.GetRolesAsync(user).Result;
+                return roles.FirstOrDefault();
+            }
+        }
 
         public async Task VoteUpComment(int commentId)
         {

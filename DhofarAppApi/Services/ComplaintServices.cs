@@ -40,11 +40,14 @@ namespace DhofarAppApi.Services
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
             var user = await _db.Users.FindAsync(userId);
             // Create a new Complaint entity
+
+            
             var newComplaint = new Complaint
             {
                 Title = complaint.Title,
                 Description = complaint.Description,
                 CategoryId = complaint.CategoryId,
+                subccategory = complaint.SubCategoryId,
                 DepartmentTypeId = complaint.DepartmentTypeId,
                 Time = now,
                 IsAccepted = false,
@@ -89,6 +92,7 @@ namespace DhofarAppApi.Services
                 State = newComplaint.State,
                 Title = newComplaint.Title,
                 CategoryID = newComplaint.CategoryId,
+                SubCategoryId = newComplaint.subccategory,
                 Status_En = newComplaint.Status_En,
                 Status_Ar = newComplaint.Status_Ar,
                 Location = newComplaint.Location,
@@ -103,6 +107,70 @@ namespace DhofarAppApi.Services
             return getComplaintdto;
         }
 
-        
+        public async Task<GetCompliantsDtoForId> GetComplaintById(int id)
+        {
+            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
+            var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
+            var user = await _db.Users.FindAsync(userId);
+
+            var complaint = await _db.Complaints
+                .Where(ci => ci.Id == id)
+                .Select(c => new GetCompliantsDtoForId
+                {
+                    Id = c.Id,
+                    State = c.State,
+                    Status = user.SelectedLanguage == "en" ? c.Status_En : c.Status_Ar,
+                    Title = c.Title,
+                    Time = c.Time,
+                    Description = c.Description,
+                    DepartmentTypeName = user.SelectedLanguage == "en" ? c.DepartmentType.Name_En : c.DepartmentType.Name_Ar,
+                    CategoryName = user.SelectedLanguage == "en" ? c.Category.Name_En : c.Category.Name_Ar,
+                    SubCategoryName = user.SelectedLanguage =="en" ? c.Category.subcategories.Where(sc=>sc.Id == c.subccategory).Select(sc=> sc.Name_En).FirstOrDefault() : c.Category.subcategories.Where(sc => sc.Id == c.subccategory).Select(sc => sc.Name_Ar).FirstOrDefault(),
+                    Location = c.Location,
+                    Files = c.Files.Select(f=> new GetComplaintFilesDTO
+                    {
+                        Id =f.Id,
+                        FilePaths = f.FilePaths,
+                        
+                    }).ToList()
+
+                }).FirstOrDefaultAsync();
+
+            return complaint;
+                
+                
+               
+
+        }
+
+        public async Task<List<GetMyComplintDTO>> GetMyComplaints()
+        {
+            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
+            var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
+            var user = await _db.Users.FindAsync(userId);
+
+            var AllComplaints = await _db.Complaints.Include(c => c.Files).Where(x => x.IsAccepted == true && x.UserId == userId).ToListAsync();
+            var AllComplaintsdto = AllComplaints.Select(getComplaintdto => new GetMyComplintDTO
+            {
+                Id = getComplaintdto.Id,
+                Title = getComplaintdto.Title,
+                Status = user.SelectedLanguage == "ar" ? getComplaintdto.Status_Ar : getComplaintdto.Status_En,
+                Time = getComplaintdto.Time,
+                Files = getComplaintdto.Files.Select(getcomplaintfilesdto => new GetComplaintFilesDTO
+                {
+                    Id = getcomplaintfilesdto.Id,
+                    ComplaintId = getcomplaintfilesdto.ComplaintId,
+                    FilePaths = getcomplaintfilesdto.FilePaths
+
+                }).ToList()
+
+            }).ToList();
+
+
+            return AllComplaintsdto;
+
+        }
     }
 }

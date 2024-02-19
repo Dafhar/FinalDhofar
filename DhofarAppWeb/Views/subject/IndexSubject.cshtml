@@ -41,9 +41,17 @@
                                 </div>
                                 <div class="col px-2">
                                     <div class="progress">
+                                        @{
+                                            // Calculate total votes (likes + dislikes)
+                                            int totalVotes = item.LikeCounter + item.DisLikeCounter;
+
+                                            // Calculate the percentage of likes
+                                            int likePercentage = totalVotes > 0 ? (item.LikeCounter * 100) / totalVotes : 0;
+                                        }
                                         <div class="progress-bar custom-progress-color" role="progressbar"
-                                             style="width: 50%;" aria-valuenow=(@item.LikeCounter-@item.DisLikeCounter) aria-valuemin="0"
+                                             style="width: @likePercentage%;" aria-valuenow="@likePercentage" aria-valuemin="0"
                                              aria-valuemax="100">
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -56,11 +64,23 @@
                             <div class="circle-container">
                                 @foreach (var comment in item.CommentSubjects)
                                 {
-                                    <span class="circle">
-                                        <img src=@comment.User.ImageURL
-                                             class="subject-user-img">
-                                    </span>
-                                }
+                                    @if (comment.User.ImageURL!= null)
+                                    {
+                                        <span class="circle">
+                                            <img src="~/@comment.User.ImageURL"
+                                                 class="subject-user-img">
+                                        </span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="circle">
+                                            <img src=@Url.Content("~/images/subject-user-img.svg") class="subject-user-img">
+                                        </span>
+
+                                    }
+
+                            }
                                 @item.CommentSubjects.Count ردود
 
                             </div>

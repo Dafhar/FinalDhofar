@@ -14,7 +14,7 @@ using DhofarAppApi.Dtos.Subject;
 
 namespace DhofarAppApi.Services
 {
-    public class UserServices : IUsers      
+    public class UserServices : IUsers
     {
         private readonly AppDbContext _context;
         private readonly FileServices  _loadFile;
@@ -100,7 +100,10 @@ namespace DhofarAppApi.Services
             var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _context.Users
+                           .Include(s => s.Subjects)
+                           .Include(c => c.CommentSubjects)
+                           .FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             {
                 modelState.AddModelError("", "User not found.");
@@ -121,7 +124,7 @@ namespace DhofarAppApi.Services
                     user.ImageURL = editProfileDTO.ImgrUrl;
                 }
 
-                 else if(editProfileDTO.ColorId != 0 && (editProfileDTO.ImgrUrl==null|| editProfileDTO.ImgrUrl == ""))
+                 else if((editProfileDTO.ColorId != 0 && editProfileDTO.ColorId != null) && (editProfileDTO.ImgrUrl==null|| editProfileDTO.ImgrUrl == ""))
                 {
                     var chosenColor = await _context.Colors.FindAsync(editProfileDTO.ColorId);
                     user.MyColor = chosenColor.HexColor;
@@ -132,7 +135,20 @@ namespace DhofarAppApi.Services
                 user.Gender = editProfileDTO.Gender;
                 user.Description = editProfileDTO.Description;
                 user.PhoneNumber = user.CodeNumber+editProfileDTO.PhoneNumber;
-               
+
+                int? subjectCount = user.Subjects.Count;
+                int? commentCount = user.CommentSubjects.Count;
+                double rate = 0.0;
+
+                // Calculate the total likes and dislikes for all subjects
+                double totalLikes = user.Subjects.Sum(s => s.LikeCounter);
+                double totalDislikes = user.Subjects.Sum(s => s.DisLikeCounter);
+
+                // Avoid division by zero if there are no likes
+                if (totalLikes > 0)
+                {
+                    rate = totalLikes / (totalLikes + totalDislikes);
+                }
 
                 var result = await _userManager.UpdateAsync(user);
                 await _context.SaveChangesAsync();
@@ -141,6 +157,7 @@ namespace DhofarAppApi.Services
                 {
                     return new ProfileDTO
                     {
+                        
                         UserName = user.UserName,
                         Country = user.Country,
                         PhoneNumber = user.PhoneNumber,
@@ -150,6 +167,9 @@ namespace DhofarAppApi.Services
                         CountryCode = user.CodeNumber,
                         Color = user.MyColor,
                         File = user.ImageURL,
+                        CommentCounter = commentCount,
+                        SubjectCounter = subjectCount,
+                        Rate = rate
                     };
                 }
                 else
@@ -206,80 +226,6 @@ namespace DhofarAppApi.Services
         }
 
 
-
-        public async Task<UserProfileDTO> GetUserById(string userId)
-        {
-            
-            //var user = await _userManager.FindByIdAsync(userId);
-            var user = await _context.Users.Include(u => u.Subjects).FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
-            {
-                return null;
-            }
-            else
-            {
-
-                var subjects = user.Subjects?.Select(s => new Subject
-                {
-                    LikeCounter = s.LikeCounter,
-                    DisLikeCounter = s.DisLikeCounter
-                }).ToList();
-                var countryCodeLength = int.Parse(user.CodeNumber);
-
-                if (subjects != null)
-                {
-                    var likeTotal = 0.0;
-                    var disLikeTotal = 0.0;
-                    foreach (var subject in subjects)
-                    {
-                        likeTotal += subject.LikeCounter;
-                        disLikeTotal += subject.DisLikeCounter;
-                    }
-
-                    var totalLikes = disLikeTotal + likeTotal / likeTotal;
-
-                    return new UserProfileDTO()
-                    {
-                        Country = user.Country != null ? user.Country : null,
-
-                        IdentityNumber = user.IdentityNumber,
-                        UserName = user.UserName,
-                        FullName = user.FullName,
-                        CountryCode = user.CodeNumber,
-                        PhoneNumber = user.PhoneNumber.Substring(countryCodeLength),
-                         Email = user.Email,
-                        Likes = user.Likes,
-                        SelectedLanguage = user.SelectedLanguage,
-                        ImageURL = user.ImageURL,
-                        Gender = user.Gender,
-                        Description = user.Description,
-                        Rate = totalLikes
-                    };
-                }
-                else
-                {
-                    return new UserProfileDTO()
-                    {
-                        Country = user.Country != null ? user.Country : null,
-                        IdentityNumber = user.IdentityNumber,
-                        UserName = user.UserName,
-                        FullName = user.FullName,
-                        CountryCode = user.CodeNumber,
-                        PhoneNumber = user.PhoneNumber.Substring(countryCodeLength),
-                        Email = user.Email,
-                        Likes = user.Likes,
-                        SelectedLanguage = user.SelectedLanguage,
-                        ImageURL = user.ImageURL,
-                        Gender = user.Gender,
-                        Description = user.Description,
-                        //Rate = totalLikes
-                    };
-                }
-
-            }
-
-        }
-
         public async Task<GetPersonalProfileDTO> GetPersonalProfile()
         {
             var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
@@ -320,7 +266,6 @@ namespace DhofarAppApi.Services
                     FullName = user.FullName,
                     UserName = user.UserName,
                     Email = user.Email,
-                    Description=user.Description,
                     Code= trimmedCode,
                     PhoneNumber = phoneNumberWithoutCountryCode,
                     Country = user.Country,
@@ -334,7 +279,8 @@ namespace DhofarAppApi.Services
         {
             var user = await _context.Users
     .Include(s => s.Subjects)
-        .ThenInclude(st => st.SubjectType)
+        .ThenInclude(sts => sts.SubjectTypeSubjects)
+        .ThenInclude(st=>st.SubjectType)
     .Include(c => c.CommentSubjects)
     .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -370,7 +316,7 @@ namespace DhofarAppApi.Services
                 Subjects = user.Subjects.Select(s => new GetSubjectForProfileDTO
                 {
                     Id = s.Id,
-                    SubjectTypeName = s.SubjectType?.Name_En, // Use null-conditional operator to avoid null reference exception
+                    SubjectType_Name = s.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                     PrimarySubject = s.PrimarySubject,
                     ImageUrl = s.Files?.FirstOrDefault()?.FilePaths ?? "", // Handle possible null FilePaths
                     CommentCounter = s.CommentSubjects?.Count ?? 0, // Use null-conditional operator to avoid null reference exception
@@ -381,6 +327,22 @@ namespace DhofarAppApi.Services
 
         }
 
+        public async Task<List<ActiveUserDTO>> GetTopActiveUsers()
+        {
+            var topUsers = await _context.Users
+            // Order users by the sum of subjects created, comments made, and votes given
+
+            .OrderByDescending(u => u.Subjects.Count + u.CommentSubjects.Count + u.UserVotes.Count + u.RatingSubjects.Count)
+            .Take(5) // Take the top 5 users
+            .Select(u=> new ActiveUserDTO
+            {
+                FullName = u.FullName,
+                ImageUrl = u.ImageURL
+            })
+            .ToListAsync();
+
+            return topUsers;
+        }
     }
 }
 
