@@ -22,12 +22,26 @@ namespace DhofarAppApi.Controllers
 
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromForm] PostComplaintDTO complaint)
+        public async Task<IActionResult> Create( PostComplaintDTO complaint)
         {
             var createdComplaint = await _complaint.CreateComplaint(complaint);
             return Ok(createdComplaint);
         }
 
+        [HttpGet("GetMyAllComplaints")]
+        public async Task<IActionResult> GetMyComplaints()
+        {
+            var complaints = await _complaint.GetMyComplaints();
+            return Ok(complaints);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCompliantById(int id)
+        {
+            var compliant = await _complaint.GetComplaintById(id);
+            return Ok(compliant);
+        }
 
     }
 

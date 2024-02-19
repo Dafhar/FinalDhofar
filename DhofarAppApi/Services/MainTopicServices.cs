@@ -29,15 +29,18 @@ namespace DhofarAppApi.Services
             var decodedJwt = _jWTTokenServices.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
             var user = await _db.Users.FindAsync(userId);
+
             var result = await _db.SubjectTypes
-                .Include(subjectType => subjectType.Subjects) 
+                .Include(subjectType => subjectType.SubjectTypeSubjects) 
+                .ThenInclude(subject => subject.Subject)
                 .Select(subjectType => new SubjectTypeDTO
                 {
                     Title = user.SelectedLanguage == "en"? subjectType.Name_En: subjectType.Name_Ar,
                     SubjectDTO = new SubjectDTO
                     {
-                        imeges = subjectType.Subjects.Select(subject => subject.User.ImageURL).ToList(), // Assuming Images is a collection of image paths in the Subject entity
-                        count = subjectType.Subjects.Count
+                        imeges = subjectType.SubjectTypeSubjects
+                        .Select(subject => subject.Subject.User.ImageURL).ToList(), // Assuming Images is a collection of image paths in the Subject entity
+                        count = subjectType.SubjectTypeSubjects.Count
                     }
                 })
                 .ToListAsync();

@@ -11,9 +11,12 @@ namespace DhofarAppApi.Dtos.Subject
 
         public string? UserName { get; set; }
 
+        public string UserImageUrl { get; set; }
+
         public string? PrimarySubject { get; set; }
                      
-        public int? SubjectTypeId { get; set; }
+       
+        public List<string>? SubjectType_Name { get; set; }
                    
         public string? Title { get; set; }
         public int LikeCounter { get; set; }
@@ -24,7 +27,13 @@ namespace DhofarAppApi.Dtos.Subject
         public string? Description { get; set; }
 
         public int VisitorCounter { get; set; }
+
+        public DateTime CreatedTime { get; set; }
+
         public PollDTO? Poll { get; set; }
+
+        public int CommentsCount { get; set; }
+
 
         public List<GetSubjectFilesDTO>? Files { get; set; }
 

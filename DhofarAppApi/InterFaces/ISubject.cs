@@ -7,7 +7,7 @@ namespace DhofarAppApi.InterFaces
     public interface ISubject
     {
 
-        public Task<GetSubjectDTO> CreateSubject(PostSubjectDTO postSubjectDto);
+        public Task<GetSubjectDTO> CreateSubject(PostSubjectDTO postSubjectDto, int generalSubjectTypeId);
 
         public Task<List<GetSubjectDTO>> GetAllSubjects();
 
@@ -22,12 +22,16 @@ namespace DhofarAppApi.InterFaces
         public void IncrementVisitorCounter(int subjectId);
 
         public int getVisitorCounter(int subjectId);
+
         public Task<string> Like(int subjectId);
+
         public Task<string> Dislike(int subjectId);
+
         public Task AddSubjectToFavorite(int subjectId);
 
         public Task RemoveSubjectFromFavorite(int subjectId);
-        public Task<List<GetSubjectDTO>> GetFavoriteSubjects();
+
+        public Task<List<ListOfAllSubjectByGeneralSubjectTypeDTO>> GetFavoriteSubjects();
 
 
         public Task<bool> VoteForPollOption(int subjectId, int PollId, int pollOptionId);
@@ -36,7 +40,7 @@ namespace DhofarAppApi.InterFaces
 
         public Task<bool> DeleteVote(int subjectId, int PollId, int pollOptionId);
 
-        public Task<Subject> GetTheMostSubjectInteract();
+        public Task<List<TopRatedSubjectsDTO>> GetTheMostSubjectInteract();
 
 
         Task<int> GetCountOfSubjects();

@@ -524,11 +524,17 @@ namespace DhofarAppApi.Services
 
 
 
-        public async Task<List<GetComplaintDTO>> GetAllUserComplaint(string userId)
+        public async Task<List<GetComplaintDTO>> GetAllUserComplaint()
         {
+            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
+            var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
             var user = await _db.Users.FindAsync(userId);
-            return await _db.Complaints.Select(getComplaintdto => new GetComplaintDTO
-            {
+
+            return await _db.Complaints
+                .Where(c=> c.IsAccepted == true)
+                .Select(getComplaintdto => new GetComplaintDTO
+                 {
                 Description = getComplaintdto.Description,
                 Location = getComplaintdto.Location,
                 State = getComplaintdto.State,
@@ -613,33 +619,7 @@ namespace DhofarAppApi.Services
         }
 
 
-        public async Task<List<GetComplaintDTO>> GetMyComplaints(string userId)
-        {
-            var user = await _db.Users.FindAsync(userId); var AllComplaints = await _db.Complaints.Include(c => c.Files).Where(x => x.IsAccepted == true && x.UserId == userId).ToListAsync();
-            var AllComplaintsdto = AllComplaints.Select(getComplaintdto => new GetComplaintDTO
-            {
-
-                Description = getComplaintdto.Description,
-                Location = getComplaintdto.Location,
-                State = getComplaintdto.State,
-                Title = getComplaintdto.Title,
-                Status = user.SelectedLanguage == "ar" ? getComplaintdto.Status_Ar : getComplaintdto.Status_En,
-                DepartmentTypeId = getComplaintdto.DepartmentTypeId,
-                Time = getComplaintdto.Time,
-                Files = getComplaintdto.Files.Select(getcomplaintfilesdto => new GetComplaintFilesDTO
-                {
-                    Id = getcomplaintfilesdto.Id,
-                    ComplaintId = getcomplaintfilesdto.ComplaintId,
-                    FilePaths = getcomplaintfilesdto.FilePaths
-
-                }).ToList()
-
-            }).ToList();
-
-
-            return AllComplaintsdto;
-
-        }
+    
 
         public async Task<GetComplaintDTO> GetComplaintById(int Id)
         {

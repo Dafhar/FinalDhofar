@@ -9,10 +9,7 @@ namespace DhofarAppApi.Model
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-            SelectedLanguage = "ar"; 
-        }
+        
         public int IdentityNumber { get; set; }
 
         public int? Likes { get; set; }
@@ -30,12 +27,14 @@ namespace DhofarAppApi.Model
 
         public string? Gender { get; set; }
 
-
         public string? Description { get; set; }
 
-
         public DateTime JoinedDate { get; set; }
+
         public DateTime LogInDate { get; set; }
+
+        public int? NumberOfVisitors { get; set; }
+
 
 
         public List<Complaint>? Complaints { get; set; }

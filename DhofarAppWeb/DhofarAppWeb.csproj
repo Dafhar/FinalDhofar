@@ -66,6 +66,10 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\uploads\68d3d417-5352-46e2-838b-ac4b4f5b735d_unknown.png" />
+    <None Include="wwwroot\uploads\a3cfa779-1119-47f3-b801-5084b664a3e2_onboard_2.png" />
+    <None Include="wwwroot\uploads\b8f808a9-5cb4-43c9-a294-3d8abfefa36f_onboard_1 %281%29.png" />
+    <None Include="wwwroot\uploads\e2d0228f-16a6-42db-9b97-ee5ee787dae1_2733138-dragon-ball-super-4k-wallpaper-for-desktop-background.jpg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -22,11 +22,11 @@ namespace DhofarAppApi.InterFaces
 
         public Task SendEmailAsync(string recipientEmail, string subject, string htmlContent);
 
-
-        Task<UserProfileDTO> GetUserById(string userId);
-
         Task<GetVisitorUserProfileDTO> GetVisitorUserProfile(string userId);
+
         Task<GetPersonalProfileDTO> GetPersonalProfile();
+
+        Task<List<ActiveUserDTO>> GetTopActiveUsers();
 
 
 

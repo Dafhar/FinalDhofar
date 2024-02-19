@@ -2,6 +2,7 @@
 using DhofarAppApi.Dtos.Comment;
 using DhofarAppApi.Dtos.Complaint;
 using DhofarAppApi.Dtos.ComplaintFiles;
+using DhofarAppApi.Dtos.GeneralSubject;
 using DhofarAppApi.Dtos.RatingSubjectDTO;
 using DhofarAppApi.Dtos.ReplyComment;
 using DhofarAppApi.Dtos.Subject;
@@ -38,10 +39,10 @@ namespace DhofarAppWeb.Services
             _jWTTokenService = jWTTokenService;
         }
 
-        public async Task<GetSubjectDTO> CreateSubject(PostSubjectDTO postSubjectDto)
+        public async Task<GetSubjectDTO> CreateSubject(PostSubjectDTO postSubjectDto, int generalSubjectTypeId)
         {
-            var JwtToken =  _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            var decodedJwt =  _jWTTokenService.DecodeJwt(JwtToken);
+            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
             if (userId == null)
@@ -51,7 +52,7 @@ namespace DhofarAppWeb.Services
             {
                 UserId = userId,
                 PrimarySubject = postSubjectDto.PrimarySubject,
-                SubjectTypeId = postSubjectDto.SubjectTypeId,
+                GeneralSubjectsTypesId = generalSubjectTypeId,
                 Title = postSubjectDto.Title,
                 Description = postSubjectDto.Description,
                 Files = new List<SubjectFiles>()
@@ -71,7 +72,21 @@ namespace DhofarAppWeb.Services
             await _db.Subjects.AddAsync(subject);
             await _db.SaveChangesAsync();
 
-            if (postSubjectDto.ImageUrl!= null)
+            foreach (var item in postSubjectDto.SubjectTypeId)
+            {
+                SubjectTypeSubject subjectTypeSubject = new SubjectTypeSubject()
+                {
+                    SubjectId = subject.Id,
+                    SubjectTypeId = item,
+                };
+                await _db.SubjectTypeSubjects.AddAsync(subjectTypeSubject);
+            }
+
+            await _db.SaveChangesAsync();
+
+
+
+            if (postSubjectDto.ImageUrl != null)
             {
                 foreach (var file in postSubjectDto.ImageUrl)
                 {
@@ -95,7 +110,7 @@ namespace DhofarAppWeb.Services
                 Id = subject.Id,
                 UserName = decodedJwt.Claims.FirstOrDefault(c => c.Type == "unique_name").Value, // Add null check here
                 PrimarySubject = subject.PrimarySubject,
-                SubjectTypeId = subject.SubjectTypeId,
+
                 Title = subject.Title,
                 Description = subject.Description,
                 VisitorCounter = subject.VisitorCounter,
@@ -117,7 +132,7 @@ namespace DhofarAppWeb.Services
                     Id = fi.Id,
                     SubjectId = fi.SubjectId,
                     FilePaths = fi.FilePaths
-                }).ToList()
+                }).ToList(),
             };
             return getSubjectDto;
         }
@@ -129,13 +144,18 @@ namespace DhofarAppWeb.Services
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
             var user = await _db.Users.FindAsync(userId);
+
+
+
             var subjects = await _db.Subjects
+
                 .Select(s => new GetSubjectDTO
                 {
                     Id = s.Id,
                     UserName = s.User.UserName,
                     PrimarySubject = s.PrimarySubject,
-                    SubjectTypeId = s.SubjectTypeId,
+                    SubjectType_Name = s.SubjectTypeSubjects.Where(sts => sts.SubjectId == s.Id)
+                    .Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                     Title = s.Title,
                     Description = s.Description,
                     LikeCounter = s.LikeCounter,
@@ -145,19 +165,24 @@ namespace DhofarAppWeb.Services
                     {
                         FilePaths = fi.FilePaths,
                     }).ToList(),
-                    CommentsSubjects = s.CommentSubjects.Select(cs => new GetSubjectCommentDTO
+                    CommentsSubjects = s.CommentSubjects
+                    .Select(cs => new GetSubjectCommentDTO
                     {
                         Id = cs.Id,
                         SubjectId = cs.SubjectId,
-                        UserName = user.UserName,
+                        UserName = cs.User.UserName,
+                        UserImageUrl = cs.User.ImageURL,
                         Comment = cs.Comment,
                         CommentTime = cs.CommentTime,
+                        File = cs.File,
                         ReplyComments = cs.CommentReplies.Where(crr => crr.CommentSubjectId == cs.Id).Select(cr => new GetReplyCommentDTO
                         {
                             Id = cr.Id,
-                            UserName = user.UserName,
+                            UserName = cr.User.UserName,
+                            UserImageUrl = cr.User.ImageURL,
                             CommentSubjectId = cr.CommentSubjectId,
-                            ReplyComment = cr.ReplyComment
+                            ReplyComment = cr.ReplyComment,
+                            file = cr.File
                         })
                         .ToList(),
                     }).ToList(),
@@ -186,13 +211,15 @@ namespace DhofarAppWeb.Services
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
             var user = await _db.Users.FindAsync(userId);
+
             var subject = await _db.Subjects
+                .Where(s => s.Id == Id)
                 .Select(s => new GetSubjectDTO
                 {
                     Id = s.Id,
+                    UserName = s.User.UserName,
                     PrimarySubject = s.PrimarySubject,
-                    UserName= user.UserName,
-                    SubjectTypeId = s.SubjectTypeId,
+                    SubjectType_Name = s.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                     Title = s.Title,
                     Description = s.Description,
                     LikeCounter = s.LikeCounter,
@@ -202,24 +229,27 @@ namespace DhofarAppWeb.Services
                     {
                         FilePaths = fi.FilePaths,
                     }).ToList(),
-                    CommentsSubjects = s.CommentSubjects.Where(cs => cs.SubjectId == s.Id).Select(cs => new GetSubjectCommentDTO
+                    CommentsSubjects = s.CommentSubjects
+                    .Select(cs => new GetSubjectCommentDTO
                     {
                         Id = cs.Id,
                         SubjectId = cs.SubjectId,
-                        UserName= user.UserName,
+                        UserName = cs.User.UserName,
+                        UserImageUrl = cs.User.ImageURL,
                         Comment = cs.Comment,
                         CommentTime = cs.CommentTime,
+                        File = cs.File,
                         ReplyComments = cs.CommentReplies.Where(crr => crr.CommentSubjectId == cs.Id).Select(cr => new GetReplyCommentDTO
                         {
                             Id = cr.Id,
                             UserName = cr.User.UserName,
+                            UserImageUrl = cr.User.ImageURL,
                             CommentSubjectId = cr.CommentSubjectId,
-                            ReplyComment = cr.ReplyComment
+                            ReplyComment = cr.ReplyComment,
+                            file = cr.File
                         })
                         .ToList(),
-
-                    })
-                    .ToList(),
+                    }).ToList(),
                     Poll = s.Poll != null ? new PollDTO
                     {
                         Id = s.Poll.Id,
@@ -234,7 +264,7 @@ namespace DhofarAppWeb.Services
                         }).ToList()
                     } : null
                 })
-                .FirstOrDefaultAsync(x => x.Id == Id);
+                .FirstOrDefaultAsync();
 
             return subject;
         }
@@ -272,6 +302,9 @@ namespace DhofarAppWeb.Services
             var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
+            var user = await _db.Users.FindAsync(userId);
+
+
             if (userId == null)
                 return null;
 
@@ -281,7 +314,7 @@ namespace DhofarAppWeb.Services
                 {
                     Id = s.Id,
                     PrimarySubject = s.PrimarySubject,
-                    SubjectTypeId = s.SubjectTypeId,
+                    SubjectType_Name = s.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                     Title = s.Title,
                     Description = s.Description,
                     VisitorCounter = s.VisitorCounter,
@@ -291,7 +324,9 @@ namespace DhofarAppWeb.Services
                         SubjectId = cs.SubjectId,
                         UserName = cs.User.UserName,
                         Comment = cs.Comment,
-                        CommentTime = cs.CommentTime
+                        CommentTime = cs.CommentTime,
+                        UserImageUrl = cs.User.ImageURL
+
                     }).ToList()
                 })
                 .ToListAsync();
@@ -305,12 +340,13 @@ namespace DhofarAppWeb.Services
             var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
+            var user = await _db.Users.FindAsync(userId);
 
             var subjectToEdit = await _db.Subjects
                 .Where(c => c.Id == subjectId && c.UserId == userId)
-                .Include(sf=> sf.Files)
+                .Include(sf => sf.Files)
                 .FirstOrDefaultAsync();
-            if (subjectToEdit==null)
+            if (subjectToEdit == null)
             {
                 return null;
             }
@@ -343,7 +379,7 @@ namespace DhofarAppWeb.Services
                 {
                     if (file != null && file.Length > 0)
                     {
-                        
+
                         var newSubjectFile = new SubjectFiles
                         {
                             FilePaths = file,
@@ -362,14 +398,14 @@ namespace DhofarAppWeb.Services
             {
                 Id = subjectToEdit.Id,
                 PrimarySubject = subjectToEdit.PrimarySubject,
-                SubjectTypeId = subjectToEdit.SubjectTypeId,
+                SubjectType_Name = subjectToEdit.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                 Title = subjectToEdit.Title,
                 Description = subjectToEdit.Description,
                 VisitorCounter = subjectToEdit.VisitorCounter,
                 Files = subjectToEdit.Files.Select(fi => new GetSubjectFilesDTO
                 {
                     FilePaths = fi.FilePaths,
-                    SubjectId= fi.SubjectId,
+                    SubjectId = fi.SubjectId,
                     Id = fi.Id
                 }).ToList()
             };
@@ -493,6 +529,8 @@ namespace DhofarAppWeb.Services
 
             return $"You disliked the subject: {selectedSub.Title}";
         }
+
+
         public async Task AddSubjectToFavorite(int subjectId)
         {
             var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
@@ -583,27 +621,30 @@ namespace DhofarAppWeb.Services
             return true;
         }
 
-        public async Task<List<GetSubjectDTO>> GetFavoriteSubjects()
+        public async Task<List<ListOfAllSubjectByGeneralSubjectTypeDTO>> GetFavoriteSubjects()
         {
             var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
             var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
+            var user = await _db.Users.FindAsync(userId);
 
             var favoriteSubjects = await _db.FavoriteSubjects
                 .Where(f => f.UserId == userId)
-                .Select(f => new GetSubjectDTO
+                .Select(f => new ListOfAllSubjectByGeneralSubjectTypeDTO
                 {
                     Id = f.Subject.Id,
-                    UserName = f.User.UserName,
+                    SubjectTypeName = f.Subject.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                     PrimarySubject = f.Subject.PrimarySubject,
-                    SubjectTypeId = f.Subject.SubjectTypeId,
-                    Title = f.Subject.Title,
-                    Description = f.Subject.Description
-                    //VisitorCounter = f.VisitorCounter,
+                    File = f.Subject.Files.Select(fs => new GetSubjectFilesDTO
+                    {
+                        FilePaths = fs.FilePaths
+                    }).FirstOrDefault(),
+                    UsersImagesUrl = f.Subject.CommentSubjects.Select(cs => cs.User.ImageURL).Distinct().ToList(),
+                    CreatedTime = f.Subject.CreatedTime,
+                    CommentsCount = f.Subject.CommentSubjects.Count
                 })
                 .ToListAsync();
-
             return favoriteSubjects;
         }
 
@@ -676,23 +717,44 @@ namespace DhofarAppWeb.Services
         }
 
 
-        public async Task<Subject> GetTheMostSubjectInteract()
+        public async Task<List<TopRatedSubjectsDTO>> GetTheMostSubjectInteract()
         {
-            var subject = await _db.Subjects
-                .Include(s => s.CommentSubjects)
-                .ThenInclude(cr => cr.CommentReplies)
-                .OrderByDescending(s => s.LikeCounter + s.CommentSubjects.Count)
-                .ThenBy(s=> s.VisitorCounter)
-                .FirstOrDefaultAsync();
-            if (subject != null)
-            { return subject; }
-            else
-                return null;
+            var JwtToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var decodedJwt = _jWTTokenService.DecodeJwt(JwtToken);
+            var userId = decodedJwt.Claims.FirstOrDefault(c => c.Type == "nameid").Value;
 
+            var user = await _db.Users.FindAsync(userId);
+
+            var subject = await _db.Subjects
+                .OrderByDescending(s => s.LikeCounter + s.CommentSubjects.Count)
+                .ThenBy(s => s.VisitorCounter)
+                .Select(s => new TopRatedSubjectsDTO
+                {
+                    Id = s.Id,
+                    FullName = s.User.UserName,
+                    UserImageUrl = s.User.ImageURL,
+                    CreatedTime = s.CreatedTime,
+                    PrimarySubject = s.PrimarySubject,
+                    Description = s.Description,
+                    File = s.Files.Select(fi => new GetSubjectFilesDTO
+                    {
+                        FilePaths = fi.FilePaths,
+                    }).FirstOrDefault(),
+                })
+                .Take(2)
+                .ToListAsync();
+            if (subject != null)
+            {
+                return subject;
+            }
+            else
+            {
+                return null;
+            }
 
         }
 
-        
+
 
         public async Task<int> GetCountOfSubjects()
         {

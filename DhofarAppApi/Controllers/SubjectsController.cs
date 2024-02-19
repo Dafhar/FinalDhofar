@@ -100,13 +100,13 @@ namespace DhofarAppApi.Controllers
         // POST: api/Subjects
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 
-        [HttpPost("Create")]
+        [HttpPost("Create/{generalSubjectId}")]
         [Authorize]
         [ProducesResponseType(typeof(GetSubjectFilesDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GetSubjectDTO>> PostSubject(PostSubjectDTO subject)
+        public async Task<ActionResult<GetSubjectDTO>> PostSubject(PostSubjectDTO subject, int generalSubjectId)
         {
-            var newSubject = await _db.CreateSubject(subject);
+            var newSubject = await _db.CreateSubject(subject, generalSubjectId);
 
             return newSubject;
         }
@@ -166,7 +166,7 @@ namespace DhofarAppApi.Controllers
 
         [Authorize]
         [HttpGet("GetAllFavoriteSubjects")]
-        public async Task<ActionResult<List<GetSubjectDTO>>> GetAllFavoriteSubjects()
+        public async Task<ActionResult<List<ListOfAllSubjectByGeneralSubjectTypeDTO>>> GetAllFavoriteSubjects()
         {
             var favSubjects = await _db.GetFavoriteSubjects();
 
@@ -241,7 +241,7 @@ namespace DhofarAppApi.Controllers
         }
 
         [HttpGet("MostInterActiveSubject")]
-        public async Task<ActionResult<Subject>> MostInterAciveSubject()
+        public async Task<IActionResult> MostInterAciveSubject()
         {
             var most = await _db.GetTheMostSubjectInteract();
 

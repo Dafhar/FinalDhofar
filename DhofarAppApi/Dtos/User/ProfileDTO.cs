@@ -4,14 +4,17 @@ namespace DhofarAppApi.Dtos.User
 {
     public class ProfileDTO
     {
+
+        
         public string? UserName { get; set; }
 
         public string ?FullName { get; set; }
 
         public string? Gender { get; set; }
-        public string? Country { get; set; }
-        public string? CountryCode { get; set; }
 
+        public string? Country { get; set; }
+
+        public string? CountryCode { get; set; }
 
         public string? PhoneNumber { get; set; }
 
@@ -20,5 +23,12 @@ namespace DhofarAppApi.Dtos.User
         public string? File { get; set; }
 
         public string? Color { get; set; }
+
+        public int? SubjectCounter { get; set; }
+
+        public int? CommentCounter { get; set; }
+
+        public double? Rate { get; set; }
+
     }
 }

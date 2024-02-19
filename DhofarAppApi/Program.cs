@@ -39,7 +39,7 @@ namespace DhofarAppWeb
             builder.Services.AddTransient<IComplaint, ComplaintServices>();
             builder.Services.AddScoped<JWTTokenServices>();
             builder.Services.AddTransient<ISubject, SubjectServices>();
-            builder.Services.AddTransient<ISubjectType, SubjectTypeServices>();
+            builder.Services.AddTransient<IGeneralSubject, GeneralSubjectTypeService>();
             builder.Services.AddTransient<IReplyComment, CommentRepliesServices>();
             builder.Services.AddScoped<IMain, MainTopicServices>();
 

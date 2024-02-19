@@ -220,9 +220,9 @@ namespace DhofarAppApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllUserComplaint(string userId)
+        public async Task<IActionResult> GetAllUserComplaint()
         {
-            var complaints = await _adimn.GetAllUserComplaint(userId);
+            var complaints = await _adimn.GetAllUserComplaint();
             return Ok(complaints);
         }
 

@@ -177,6 +177,9 @@ namespace DhofarAppApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AdminNotes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -219,6 +222,9 @@ namespace DhofarAppApi.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("subccategory")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1526,6 +1532,77 @@ namespace DhofarAppApi.Migrations
                     b.ToTable("FavoriteSubjects");
                 });
 
+            modelBuilder.Entity("DhofarAppApi.Model.GeneralSubjectsType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name_Ar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name_En")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_Ar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_En")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralSubjectsTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name_Ar = "الأفكار والمقترحات العامة",
+                            Name_En = "General ideas and suggestions",
+                            Title_Ar = "عام",
+                            Title_En = "Public"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name_Ar = "تطوير الخدمات الالكترونية",
+                            Name_En = "Development of electronic services",
+                            Title_Ar = "عام",
+                            Title_En = "Public"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name_Ar = "حلول وأفكار تصريف مياه الأمطار",
+                            Name_En = "Solutions and ideas for rainwater drainage",
+                            Title_Ar = "عام",
+                            Title_En = "Public"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name_Ar = "تطوير السوق المركزي",
+                            Name_En = "Development of the central market",
+                            Title_Ar = "عام",
+                            Title_En = "Public"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name_Ar = "مقترح لفعاليات خريف ظفار ٢٠٢٤",
+                            Name_En = "Proposal for Dhofar Fall 2024 events",
+                            Title_Ar = "خاص",
+                            Title_En = "Private"
+                        });
+                });
+
             modelBuilder.Entity("DhofarAppApi.Model.IdentityNumber", b =>
                 {
                     b.Property<int>("Id")
@@ -1540,27 +1617,6 @@ namespace DhofarAppApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IdentityNumbers");
-                });
-
-            modelBuilder.Entity("DhofarAppApi.Model.MainTopic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Title_Ar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title_En")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MainTopices");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.OnBoardScreen", b =>
@@ -1742,15 +1798,15 @@ namespace DhofarAppApi.Migrations
                     b.Property<int>("DisLikeCounter")
                         .HasColumnType("int");
 
+                    b.Property<int>("GeneralSubjectsTypesId")
+                        .HasColumnType("int");
+
                     b.Property<int>("LikeCounter")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimarySubject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectTypeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -1765,7 +1821,7 @@ namespace DhofarAppApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectTypeId");
+                    b.HasIndex("GeneralSubjectsTypesId");
 
                     b.HasIndex("UserId");
 
@@ -1801,9 +1857,6 @@ namespace DhofarAppApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("MainTopicId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name_Ar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1812,13 +1865,7 @@ namespace DhofarAppApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TitleValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MainTopicId");
 
                     b.ToTable("SubjectTypes");
 
@@ -1826,17 +1873,30 @@ namespace DhofarAppApi.Migrations
                         new
                         {
                             Id = 1,
-                            Name_Ar = "النوع 1",
-                            Name_En = "Type 1",
-                            TitleValue = "Type 1"
+                            Name_Ar = "نقطة نقاش",
+                            Name_En = "suggest"
                         },
                         new
                         {
                             Id = 2,
-                            Name_Ar = "النوع 2",
-                            Name_En = "Type 2",
-                            TitleValue = "Type 2"
+                            Name_Ar = "افكار مبتكرة",
+                            Name_En = "Ideas"
                         });
+                });
+
+            modelBuilder.Entity("DhofarAppApi.Model.SubjectTypeSubject", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubjectId", "SubjectTypeId");
+
+                    b.HasIndex("SubjectTypeId");
+
+                    b.ToTable("SubjectTypeSubjects");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.User", b =>
@@ -1906,6 +1966,9 @@ namespace DhofarAppApi.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("NumberOfVisitors")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -2381,9 +2444,9 @@ namespace DhofarAppApi.Migrations
 
             modelBuilder.Entity("DhofarAppApi.Model.Subject", b =>
                 {
-                    b.HasOne("DhofarAppApi.Model.SubjectType", "SubjectType")
+                    b.HasOne("DhofarAppApi.Model.GeneralSubjectsType", "GeneralSubjectsTypes")
                         .WithMany("Subjects")
-                        .HasForeignKey("SubjectTypeId")
+                        .HasForeignKey("GeneralSubjectsTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2393,7 +2456,7 @@ namespace DhofarAppApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SubjectType");
+                    b.Navigation("GeneralSubjectsTypes");
 
                     b.Navigation("User");
                 });
@@ -2409,11 +2472,23 @@ namespace DhofarAppApi.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("DhofarAppApi.Model.SubjectType", b =>
+            modelBuilder.Entity("DhofarAppApi.Model.SubjectTypeSubject", b =>
                 {
-                    b.HasOne("DhofarAppApi.Model.MainTopic", null)
-                        .WithMany("subjectTypes")
-                        .HasForeignKey("MainTopicId");
+                    b.HasOne("DhofarAppApi.Model.Subject", "Subject")
+                        .WithMany("SubjectTypeSubjects")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DhofarAppApi.Model.SubjectType", "SubjectType")
+                        .WithMany("SubjectTypeSubjects")
+                        .HasForeignKey("SubjectTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("SubjectType");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.UserColors", b =>
@@ -2558,9 +2633,9 @@ namespace DhofarAppApi.Migrations
                     b.Navigation("DepartmentAdmins");
                 });
 
-            modelBuilder.Entity("DhofarAppApi.Model.MainTopic", b =>
+            modelBuilder.Entity("DhofarAppApi.Model.GeneralSubjectsType", b =>
                 {
-                    b.Navigation("subjectTypes");
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.Poll", b =>
@@ -2586,11 +2661,13 @@ namespace DhofarAppApi.Migrations
                     b.Navigation("Poll");
 
                     b.Navigation("RatingSubjects");
+
+                    b.Navigation("SubjectTypeSubjects");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.SubjectType", b =>
                 {
-                    b.Navigation("Subjects");
+                    b.Navigation("SubjectTypeSubjects");
                 });
 
             modelBuilder.Entity("DhofarAppApi.Model.User", b =>

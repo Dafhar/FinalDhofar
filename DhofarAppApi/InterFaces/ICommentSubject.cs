@@ -9,7 +9,7 @@ namespace DhofarAppApi.InterFaces
     {
         public Task<GetSubjectCommentDTO> CreateCommentSubject(PostCommentDTO postComment,int subjectId );
 
-        public Task<List<GetSubjectCommentDTO>> GetAllCommentForSubjectId(int subjectId);
+        public Task<List<GetAllCommentsForSubjectDTO>> GetAllCommentForSubjectId(int subjectId);
 
         public Task<GetSubjectCommentDTO> EditComment(int  commentId, PostCommentDTO commentDTO);
 
