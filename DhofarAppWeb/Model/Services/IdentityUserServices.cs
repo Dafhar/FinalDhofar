@@ -115,15 +115,15 @@ namespace DhofarAppWeb.Model.Services
 
         public async Task<UserDTO> Login(LoginInputDTO loginInputDTO, ModelStateDictionary modelState)
         {
-            var userByPhoneNumber = await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == loginInputDTO.PhoneNumber);
+            var userByPhoneNumber = await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == loginInputDTO.LoginPhoneNumber);
             if (userByPhoneNumber != null)
             {
-                bool isValidPassword = await _userManager.CheckPasswordAsync(userByPhoneNumber, loginInputDTO.Password);
+                bool isValidPassword = await _userManager.CheckPasswordAsync(userByPhoneNumber, loginInputDTO.LoginPassword);
                 if (isValidPassword)
                 {
                     userByPhoneNumber.LogInDate = DateTime.UtcNow;
                     await _context.SaveChangesAsync();
-                    var result = await _signInManager.PasswordSignInAsync(userByPhoneNumber.UserName, loginInputDTO.Password, true, false);
+                    var result = await _signInManager.PasswordSignInAsync(userByPhoneNumber.UserName, loginInputDTO.LoginPassword, true, false);
                     if (result.Succeeded)
                     {
                         return new UserDTO

@@ -37,11 +37,10 @@ namespace DhofarAppWeb.Services
             var user = await _db.Users.FindAsync(userId);
 
             var generalSubjectTypes = await _db.GeneralSubjectsTypes
-    .Where(gs => gs.Title_En == "public")
-    .Include(gs => gs.Subjects)
-        .ThenInclude(s => s.CommentSubjects)
-    .ToListAsync();
-
+            .Where(gs => gs.Title_En == "public")
+            .Include(gs => gs.Subjects)
+                .ThenInclude(s => s.CommentSubjects)
+            .ToListAsync();
 
             var mappedResults = generalSubjectTypes.Select(st => new GetGeneralSubjectTypeToAllDTO
             {
@@ -49,8 +48,9 @@ namespace DhofarAppWeb.Services
                 Name = user.SelectedLanguage == "en" ? st.Name_En : st.Name_Ar,
                 SubjectsCounter = st.Subjects.Count,
                 CommentsCounter = st.Subjects.SelectMany(s => s.CommentSubjects).Count(), // Count all comment subjects across all subjects
-                TopUsersImages = st.Subjects.Select(s => s.User.ImageURL).Take(5).ToList(),
+                TopUsersImages = st.Subjects.Where(s => s.User != null).Select(s => s.User.ImageURL).Take(5).ToList(), // Add null check for User property
             }).ToList();
+
 
             return mappedResults;
 
@@ -109,7 +109,7 @@ namespace DhofarAppWeb.Services
                         Id = s.Id,
                         SubjectTypeName = s.SubjectTypeSubjects.Select(sts => user.SelectedLanguage == "en" ? sts.SubjectType.Name_En : sts.SubjectType.Name_Ar).ToList(),
                         PrimarySubject = s.PrimarySubject,
-                        UsersImagesUrl = s.CommentSubjects.Select(cs=>cs.User.ImageURL).Distinct().ToList(),
+                        UsersImagesUrl = st.Subjects.Where(s => s.CommentSubjects != null).Select(s => s.User.ImageURL).Distinct().ToList(), // Add null check for User property
                         CommentsCount = s.CommentSubjects.Count,
                         CreatedTime = s.CreatedTime,
                         File = s.Files.Select(f => new GetSubjectFilesDTO
@@ -187,9 +187,10 @@ namespace DhofarAppWeb.Services
             {
                 Id = st.Id,
                 Name = user.SelectedLanguage == "en" ? st.Name_En : st.Name_Ar,
+                Title = user.SelectedLanguage != "en" ? st.Title_En : st.Title_Ar,
                 SubjectsCounter = st.Subjects.Count,
                 CommentsCounter = st.Subjects.SelectMany(s => s.CommentSubjects).Count(), // Count all comment subjects across all subjects
-                TopUsersImages = st.Subjects.Select(s => s.User.ImageURL).Take(5).ToList(),
+                TopUsersImages = st.Subjects.Where(s => s.User != null).Select(s => s.User.ImageURL).Take(5).ToList(), // Add null check for User property
             }).ToList();
 
             return mappedResults;

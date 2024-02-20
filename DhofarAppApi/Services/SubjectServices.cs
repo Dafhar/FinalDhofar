@@ -55,6 +55,7 @@ namespace DhofarAppWeb.Services
                 GeneralSubjectsTypesId = generalSubjectTypeId,
                 Title = postSubjectDto.Title,
                 Description = postSubjectDto.Description,
+                CreatedTime = DateTime.Now,
                 Files = new List<SubjectFiles>()
             };
             if (!string.IsNullOrEmpty(postSubjectDto.PollQuestion) && postSubjectDto.PollOptions != null)
@@ -110,7 +111,7 @@ namespace DhofarAppWeb.Services
                 Id = subject.Id,
                 UserName = decodedJwt.Claims.FirstOrDefault(c => c.Type == "unique_name").Value, // Add null check here
                 PrimarySubject = subject.PrimarySubject,
-
+                CreatedTime = subject.CreatedTime,
                 Title = subject.Title,
                 Description = subject.Description,
                 VisitorCounter = subject.VisitorCounter,
@@ -161,6 +162,8 @@ namespace DhofarAppWeb.Services
                     LikeCounter = s.LikeCounter,
                     DisLikeCounter = s.DisLikeCounter,
                     VisitorCounter = s.VisitorCounter,
+                    CreatedTime = s.CreatedTime,
+                    CommentsCount = s.CommentSubjects.Count(),
                     Files = s.Files.Select(fi => new GetSubjectFilesDTO
                     {
                         FilePaths = fi.FilePaths,
@@ -173,7 +176,6 @@ namespace DhofarAppWeb.Services
                         UserName = cs.User.UserName,
                         UserImageUrl = cs.User.ImageURL,
                         Comment = cs.Comment,
-                        CommentTime = cs.CommentTime,
                         File = cs.File,
                         ReplyComments = cs.CommentReplies.Where(crr => crr.CommentSubjectId == cs.Id).Select(cr => new GetReplyCommentDTO
                         {
@@ -182,6 +184,7 @@ namespace DhofarAppWeb.Services
                             UserImageUrl = cr.User.ImageURL,
                             CommentSubjectId = cr.CommentSubjectId,
                             ReplyComment = cr.ReplyComment,
+                            
                             file = cr.File
                         })
                         .ToList(),
@@ -225,6 +228,8 @@ namespace DhofarAppWeb.Services
                     LikeCounter = s.LikeCounter,
                     DisLikeCounter = s.DisLikeCounter,
                     VisitorCounter = s.VisitorCounter,
+                    CreatedTime = s.CreatedTime,
+                    
                     Files = s.Files.Select(fi => new GetSubjectFilesDTO
                     {
                         FilePaths = fi.FilePaths,
@@ -237,7 +242,6 @@ namespace DhofarAppWeb.Services
                         UserName = cs.User.UserName,
                         UserImageUrl = cs.User.ImageURL,
                         Comment = cs.Comment,
-                        CommentTime = cs.CommentTime,
                         File = cs.File,
                         ReplyComments = cs.CommentReplies.Where(crr => crr.CommentSubjectId == cs.Id).Select(cr => new GetReplyCommentDTO
                         {
@@ -318,13 +322,13 @@ namespace DhofarAppWeb.Services
                     Title = s.Title,
                     Description = s.Description,
                     VisitorCounter = s.VisitorCounter,
+                    CreatedTime = s.CreatedTime,
                     CommentsSubjects = s.CommentSubjects.Select(cs => new GetSubjectCommentDTO
                     {
                         Id = cs.Id,
                         SubjectId = cs.SubjectId,
                         UserName = cs.User.UserName,
                         Comment = cs.Comment,
-                        CommentTime = cs.CommentTime,
                         UserImageUrl = cs.User.ImageURL
 
                     }).ToList()

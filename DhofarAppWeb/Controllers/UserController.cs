@@ -61,6 +61,10 @@ namespace DhofarAppWeb.Controllers
             var user = await _context.Login(loginDto, this.ModelState);
             if (ModelState.IsValid && user != null)
             {
+                if (HttpContext.Session.GetString("NonLoggedInVisitor") != null)
+                {
+                    HttpContext.Session.Remove("NonLoggedInVisitor");
+                }
                 return Json(new { success = true });
             }
             else

@@ -26,6 +26,7 @@
                 }
                 else if (response.errors && response.errors.hasOwnProperty("InvalidLogin")) {
                     $('#loginErrors').text('Invalid login. Please try again.');
+
                 } 
                 else if (response.errors) {
                     $.each(response.errors, function (key, value) {
@@ -43,4 +44,5 @@
             }
         });
     });
+
 });

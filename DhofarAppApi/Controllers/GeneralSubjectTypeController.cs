@@ -28,7 +28,7 @@ namespace DhofarAppApi.Controllers
         }
 
         [HttpGet("AllGeneralSbujectsTypesForAdmin")]
-        public async Task<ActionResult<List<GetGeneralSubjectTypeDTO>>> GetAllSubjectTypesFirAdmins()
+        public async Task<ActionResult<List<GetGeneralSubjectTypeDTO>>> GetAllSubjectTypesForAdmins()
         {
             var subjectTypes = await _generalSubjectType.GetAllSubjectTypesForAdmin();
             return Ok(subjectTypes);
