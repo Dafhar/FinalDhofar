@@ -44,6 +44,7 @@ namespace DhofarAppApi.Services
             
             var newComplaint = new Complaint
             {
+                
                 Title = complaint.Title,
                 Description = complaint.Description,
                 CategoryId = complaint.CategoryId,
@@ -87,6 +88,7 @@ namespace DhofarAppApi.Services
             // Prepare and return response DTO
             var getComplaintdto = new ComplaintDTO
             {
+                Id = newComplaint.Id,
                 UserName=user.UserName,
                 Description = newComplaint.Description,
                 State = newComplaint.State,

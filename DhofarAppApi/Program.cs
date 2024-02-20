@@ -55,6 +55,7 @@ namespace DhofarAppWeb
             builder.Services.AddTransient<IDepartmentType, DepartmentServices>();
             builder.Services.AddTransient<IAdmin, AdminServices>();
             builder.Services.AddTransient<IOnBoardScreen, OnBoardScreenServices>();
+            builder.Services.AddTransient<ISearch, SearchService>();
 
             builder.Services.AddScoped<FileServices>();
 

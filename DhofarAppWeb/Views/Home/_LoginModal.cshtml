@@ -20,32 +20,32 @@
                         @Html.AntiForgeryToken()
 
                         <div class="mb-3">
-                            <label asp-for="PhoneNumber" class="form-label navy">
+                            <label asp-for="LoginPhoneNumber" class="form-label navy">
                                 الإيميل /
                                 رقم الهاتف
                             </label>
-                            <input asp-for="PhoneNumber" type="text" class="form-control input text-end" placeholder="9999 9999 99" name="PhoneNumber">
+                            <input asp-for="LoginPhoneNumber" type="text" class="form-control input text-end" placeholder="9999 9999 99" name="LoginPhoneNumber">
 
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <span asp-validation-for="LoginPhoneNumber" class="text-danger"></span>
 
 
                         </div>
                             <div class="mb-3">
-                                <label asp-for="Password" class="form-label navy">
+                                <label asp-for="LoginPassword" class="form-label navy">
                                     كلمة
                                     المرور
                                 </label>
 
                                 <div class="input-group">
                                     <div class="input-group">
-                                        <input asp-for="Password" type="password"
+                                        <input asp-for="LoginPassword" type="password"
                                                class="form-control input"
                                                id="loginModal" placeholder="*****">
                                         <span class="password-eye-btn" type="button"
                                               onclick="togglePassword('loginModal')">
                                             <i id="eyeIcon2" class="fa-regular fa-eye"></i>
                                         </span>
-                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                        <span asp-validation-for="LoginPassword" class="text-danger"></span>
 
 
                                     </div>
@@ -62,16 +62,17 @@
 
                             <input type="submit" class="btn login-form-button btn-sm px-4" value="تسجيل الدخول" />
 
-                            <button class="btn login-form-button btn-sm px-3" id="registerFormShow"
-                                    data-bs-target="#exampleModalToggle2"
-                                    data-bs-toggle="modal">
-                                تسجيل مستخدم جديد
-                            </button>
+                            
                           
                         </div>
                         <div id="loginErrors" class="text-danger mb-3"></div>
                        
                     </form>
+                    <button class="btn login-form-button btn-sm px-3" id="registerFormShow"
+                            data-bs-target="#exampleModalToggle2"
+                            data-bs-toggle="modal">
+                        تسجيل مستخدم جديد
+                    </button>
                     
                     <a href="#" class="navy mt-2" data-bs-target="#exampleModalToggle4"
                        data-bs-toggle="modal">نسيت كلمة المرور</a>

@@ -6,9 +6,9 @@ namespace DhofarAppWeb.Dtos.User
     {
         [Required]
 
-        public string PhoneNumber { get; set; }
+        public string LoginPhoneNumber { get; set; }
         [Required]
 
-        public string Password { get; set; }
+        public string LoginPassword { get; set; }
     }
 }

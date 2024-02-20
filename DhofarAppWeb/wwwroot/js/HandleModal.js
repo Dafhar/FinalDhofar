@@ -23,7 +23,7 @@
                     $('#exampleModalToggle2').modal('hide');
                     // Show the confirmation modal
                     $("#exampleModalToggle3").modal("show");
-                //    $("#exampleModalToggle3").modal("show");
+                    //    $("#exampleModalToggle3").modal("show");
                 } else {
                     if (response.errors) {
                         // Update error messages based on response

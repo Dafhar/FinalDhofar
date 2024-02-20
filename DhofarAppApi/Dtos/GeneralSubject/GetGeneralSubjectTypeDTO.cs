@@ -8,6 +8,8 @@ namespace DhofarAppApi.Dtos.GeneralSubject
 
         public string Name { get; set; }
 
+        public string Title { get; set; }
+
         public int SubjectsCounter { get; set; }
 
         public int CommentsCounter { get; set; }

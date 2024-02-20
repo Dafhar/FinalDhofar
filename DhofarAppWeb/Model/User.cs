@@ -33,6 +33,7 @@ namespace DhofarAppWeb.Model
 
         public string? Description { get; set; }
 
+        public int? NumberOfVisitors { get; set; }
 
         public DateTime JoinedDate { get; set; }
         public DateTime LogInDate { get; set; }

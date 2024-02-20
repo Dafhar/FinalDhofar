@@ -65,8 +65,6 @@ namespace DhofarAppWeb.Data
         public DbSet<SubjectTypeSubject> SubjectTypeSubjects { get; set; }
 
 
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
